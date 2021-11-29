@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>JOBCHO 1.0</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -91,11 +93,17 @@
                         <!--게시판 영역-->
                         <h3>토픽 <a href="#" class="collapse__sublink-left" id="createBoard"><ion-icon name="add-outline" ></ion-icon></a></h3>
                         <div class="nav__list-left nav__scroll-left">
-                            <a href="#" class="nav__link-left active-left">
+                        
+                        <c:forEach items="${board}" var="board">
+							<a href='/board/post?bno=<c:out value="${board.board_num }"/>' class="nav__link-left active-left">
                                 <ion-icon name="home-outline" class="nav__icon-left"></ion-icon>
-                                <span class="nav__name-left">Dashboard</span>
+                                <span class="nav__name-left">${board.board_name }</span>
                             </a>
-                            <a href="#" class="nav__link-left">
+						</c:forEach>
+                            
+                            
+                            
+                            <!-- <a href="#" class="nav__link-left">
                                 <ion-icon name="chatbubbles-outline" class="nav__icon-left"></ion-icon>
                                 <span class="nav__name-left">Messenger</span>
                             </a>
@@ -108,7 +116,7 @@
                             <a href="#" class="nav__link-left">
                                 <ion-icon name="settings-outline" class="nav__icon-left"></ion-icon>
                                 <span class="nav__name-left">Settings</span>
-                            </a>
+                            </a> -->
                            
                           
                         </div>
@@ -244,7 +252,7 @@
               </div>
               <div class="form-group">
                 <label>작성자</label> 
-                <input class="form-control" name='replyDate' value='2018-01-01 13:13'>
+                <input class="form-control" name='member_name' value='member_name'>
               </div>
       
             </div>
@@ -333,7 +341,7 @@ $(document).ready(function(){
     var modal = $(".modal");
     var modalInputReply = modal.find("input[name='boardName']");
     var modalInputReplyer = modal.find("input[name='boardInfo']");
-    var modalInputReplyDate = modal.find("input[name='replyDate']");
+    var modalInputReplyDate = modal.find("input[name='member_name']");
     
     var modalModBtn = $("#modalModBtn");
     var modalRemoveBtn = $("#modalRemoveBtn");
@@ -352,10 +360,11 @@ $(document).ready(function(){
 		e.preventDefault(); //<a>태그 기본이벤트 삭제
 		
 		 modal.find("input").val("");
-	     modalInputReplyDate.closest("div").hide();
+	     /* modalInputReplyDate.closest("div").hide(); */
 	     modal.find("button[id !='modalCloseBtn']").hide(); //Close버튼이 아니면 숨기기
 	      
 	     modalRegisterBtn.show();
+	     modalInputReplyDate.show();
 		
 		$(".modal").modal("show");
 		

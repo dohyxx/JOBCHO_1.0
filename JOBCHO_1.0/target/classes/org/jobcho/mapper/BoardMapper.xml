@@ -6,8 +6,8 @@
 	<cache />
 	
 	
-	<!-- 게시판 목록 -->
-	<select id="listBoard" resultType="org.jobcho.domain.BoardVO">
+	<!-- 게시판 목록 가져오기 -->
+	<select id="getListBoard" resultType="org.jobcho.domain.BoardVO">
 		<![CDATA[ 
 			select * from boards  
 		]]>
@@ -36,7 +36,7 @@
 	</select> 
 	
 	
-	<select id="readBoard" resultType="org.jobcho.domain.BoardVO">
+	<select id="getBoard" resultType="org.jobcho.domain.BoardVO">
 		select * from boards where board_num = #{board_num}
 		</select>
 	
