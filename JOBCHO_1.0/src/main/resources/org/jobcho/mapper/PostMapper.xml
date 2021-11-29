@@ -13,11 +13,11 @@
 	</insert>
 	
 	
-	<!-- 게시글 조회 -->
-	<select id="getListPost" parameterType="int" resultType="org.jobcho.domain.PostVO">
+	<!-- 게시글 리스트 -->
+	<select id="getListPost" resultType="org.jobcho.domain.PostVO">
 		<![CDATA[ 
-				select * from post
-				where board_num = #{board_num}
+				select * from tbl_board
+				where bno < 30
 			]]>
 	</select>
 	

@@ -1,23 +1,21 @@
 package org.jobcho.domain;
 
 import java.util.Date;
+import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class PostVO {
-	private int post_num;
-	private String post_title;
-	private String post_contents;
-	private int board_num;
-	private int member_num;
-	private Date post_date;
-	private int isLive;
-	
-	private BoardVO board;
-	private MembersVO member;
+
+  private Long bno;
+  private String title;
+  private String content;
+  private String writer;
+  private Date regdate;
+  private Date updateDate;
+  
+  private int replyCnt; //댓글 수 처리
+  
+//  private List<BoardAttachVO> attachList; //파일 1개의 정보가 리스트로 
 }

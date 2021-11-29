@@ -2,7 +2,7 @@ package org.jobcho.service;
 
 import java.util.List;
 
-import org.jobcho.domain.BoardVO;
+import org.jobcho.domain.PostVO;
 import org.jobcho.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	//게시판 등록
 	@Override
-	public int insertBoard(BoardVO board) {
+	public int insertBoard(PostVO board) {
 		
 		log.info("서비스 게시판 등록");
 		
@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	//게시판 목록
 	@Override
-	public List<BoardVO> getListBoard() {
+	public List<PostVO> getListBoard() {
 		log.info("서비스 목록 테스트!!");
 		return mapper.getListBoard();
 	}
@@ -41,7 +41,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	//게시판 수정
 	@Override
-	public int updateBoard(BoardVO board) {
+	public int updateBoard(PostVO board) {
 		log.info("서비스 수정 테스트!!" + board);
 		
 		return mapper.updateBoard(board);

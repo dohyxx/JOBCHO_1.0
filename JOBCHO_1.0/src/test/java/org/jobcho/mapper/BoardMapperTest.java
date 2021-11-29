@@ -4,7 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 import java.util.List;
 
-import org.jobcho.domain.BoardVO;
+import org.jobcho.domain.PostVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

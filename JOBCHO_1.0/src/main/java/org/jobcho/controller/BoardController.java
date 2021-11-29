@@ -2,7 +2,7 @@ package org.jobcho.controller;
 
 import java.util.List;
 
-import org.jobcho.domain.BoardVO;
+import org.jobcho.domain.PostVO;
 import org.jobcho.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,10 +42,7 @@ public class BoardController {
 	}
 	
 	
-	@GetMapping("/post")
-	public void getPost(Model model){
-		
-	}
+	
 
 	
 	

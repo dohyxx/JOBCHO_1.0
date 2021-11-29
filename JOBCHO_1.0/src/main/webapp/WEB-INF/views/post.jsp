@@ -6,7 +6,7 @@
 
 
 
-<div class="row" style="margin-top: 110px">
+<div class="row" style="margin-top: 80px">
 	<div class="col-sm-7" style="margin-left: 450px">
 		<h1 class="page-header">Tables</h1>
 	</div>
@@ -14,7 +14,7 @@
 </div>
 <!-- /.row -->
 
-<div class="row">
+<div class="row" >
 	<div class="col-sm-7" style="margin-left: 450px">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -35,21 +35,17 @@
 						</tr>
 					</thead>
 
-					<c:forEach items="${list}" var="board">
+					<c:forEach items="${postList}" var="postList">
 						<tr>
-							<td><c:out value="${board.bno}" /></td>
-							<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td> --%>
+							<td><c:out value="${postList.bno}"/></td>
 
-							<td><a class='move' href='<c:out value="${board.bno}"/>'><!--move 클래스 추가 -->
-									<c:out value="${board.title}" /><!-- 제목 클릭 시 move이벤트 발생 -->
-									<b>[ <c:out value="${board.replyCnt}" /> ]</b> <!--게시글 목록을 보여줄때 댓글 수도 함께 보여준다. -->
+							<td><a class='move' href='<c:out value="${postList.bno}"/>'> <!--move 클래스 추가 -->
+									<c:out value="${postList.title}"/><!-- 제목 클릭 시 move이벤트 발생 -->
 							</a></td>
 
-							<td><c:out value="${board.writer}" /></td>
+							<td><c:out value="${postList.writer}"/></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${board.regdate}" /></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${board.updateDate}" /></td>
+									value="${postList.regdate}"/></td>
 						</tr>
 					</c:forEach>
 				</table>

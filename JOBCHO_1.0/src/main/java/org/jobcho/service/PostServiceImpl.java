@@ -29,10 +29,10 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostVO> getListPost(int board_num) {
+	public List<PostVO> getListPost() {
 		log.info("서비스 게시글 리스트");
 		
-		return mapper.getListPost(board_num);
+		return mapper.getListPost();
 	}
 
 	@Override

@@ -2,16 +2,16 @@ package org.jobcho.service;
 
 import java.util.List;
 
-import org.jobcho.domain.BoardVO;
+import org.jobcho.domain.PostVO;
 
 
 public interface BoardService {
 	
-	public int insertBoard(BoardVO board);
+	public int insertBoard(PostVO board);
 	
-	public List<BoardVO> getListBoard();
+	public List<PostVO> getListBoard();
 	
-	public int updateBoard(BoardVO board);
+	public int updateBoard(PostVO board);
 	
 	public void deleteBoard(int board_num);
 
