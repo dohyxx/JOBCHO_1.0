@@ -1,3 +1,4 @@
+
 package org.jobcho.service;
 
 import java.util.List;
@@ -34,6 +35,13 @@ public class PostServiceImpl implements PostService {
 		
 		return mapper.getListPost();
 	}
+	
+	@Override
+	public PostVO getPost(int post_num) {
+		log.info("서비스 게시글 상세조회");
+		
+		return mapper.getPost(post_num);
+	}
 
 	@Override
 	public int updateBoard(PostVO post) {
@@ -45,7 +53,11 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public void deletePost(int post_num) {
 		log.info("서비스 게시글 삭제");
+		System.out.println("서비스 삭제");
 		mapper.deletePost(post_num);
 	}
+
+	
+	
 
 }

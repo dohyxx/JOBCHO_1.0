@@ -16,8 +16,17 @@
 	<!-- 게시글 리스트 -->
 	<select id="getListPost" resultType="org.jobcho.domain.PostVO">
 		<![CDATA[ 
-				select * from tbl_board
-				where bno < 30
+				select * from post
+				where board_num = 42
+				and islive = 1
+			]]>
+	</select>
+	
+	<!-- 게시글 상세조회 -->
+	<select id="getPost" parameterType="int" resultType="org.jobcho.domain.PostVO">
+		<![CDATA[ 
+				select * from post
+				where post_num = #{post_num}
 			]]>
 	</select>
 	

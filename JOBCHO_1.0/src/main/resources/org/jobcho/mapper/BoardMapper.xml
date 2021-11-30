@@ -9,7 +9,7 @@
 	<!-- 게시판 목록 가져오기 -->
 	<select id="getListBoard" resultType="org.jobcho.domain.BoardVO">
 		<![CDATA[ 
-			select * from boards  
+			select * from board  
 		]]>
 	</select>
 	
@@ -17,7 +17,7 @@
 	<!-- 게시판 생성 -->
 	<insert id="insertBoard" parameterType="org.jobcho.domain.BoardVO"> 
 		<![CDATA[ 
-			insert into boards(board_num, board_name, board_info) 
+			insert into board(board_num, board_name, board_info) 
 				values(
 					board_num.nextval, #{board_name}, #{board_info}
 				)
@@ -26,18 +26,18 @@
 	
 
 	<update id="updateBoard" parameterType="org.jobcho.domain.BoardVO">
-		update boards set board_name= #{board_name }, board_info= #{board_info }
+		update board set board_name= #{board_name }, board_info= #{board_info }
 		where board_num= #{board_num }
 	</update>
 	
 	
 	<select id="deleteBoard" parameterType="int">
-		DELETE FROM boards WHERE board_num = #{board_num}
+		DELETE FROM board WHERE board_num = #{board_num}
 	</select> 
 	
 	
 	<select id="getBoard" resultType="org.jobcho.domain.BoardVO">
-		select * from boards where board_num = #{board_num}
+		select * from board where board_num = #{board_num}
 		</select>
 	
 	

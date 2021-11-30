@@ -232,7 +232,7 @@
     <!-- 컨텐츠 시작-->
 
 <!-- 게시판 생성 모달창 -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
         aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -265,19 +265,14 @@
        </div>
        
 		</div>
-          <!-- /.modal-content -->
+          /.modal-content
         </div>
-        <!-- /.modal-dialog -->
+        /.modal-dialog
       </div>
-      <!-- /.modal -->
-
-
-   
+      /.modal  -->
+      
     <!-- 컨텐츠 끝-->
     <!-- 컨텐츠 끝-->
-
-
-
 
     <!-- modal 모음-->
     <!-- <div class="row">
@@ -331,7 +326,7 @@
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
     <script src="/resources/post_and_board/sidebar-right.js"></script>
     <script src="/resources/post_and_board/sidebar-left.js"></script>
-	<script type="text/javascript" src="/resources/js/reply.js"></script>
+	<script type="text/javascript" src="/resources/js/board.js"></script>
 
 <script >
 

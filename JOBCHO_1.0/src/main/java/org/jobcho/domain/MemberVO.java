@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostVO {
-	private int post_num;
-	private String post_title;
-	private String post_contents;
-	private int board_num;
+public class MemberVO {
 	private int member_num;
-	private Date post_date;
+	private String member_position;
+	private int team_num;
+	private int user_num;
 	private int isLive;
+	private Date member_date;
 	
-	private BoardVO board;
-	private MemberVO member;
+	private UsersVO user;
+	private TeamVO team;
 }
+

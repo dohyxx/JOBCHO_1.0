@@ -8,7 +8,7 @@
 
 <div class="row" style="margin-top: 80px">
 	<div class="col-sm-7" style="margin-left: 450px">
-		<h1 class="page-header">Tables</h1>
+		<h1 class="page-header">게시판 이름</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -18,9 +18,9 @@
 	<div class="col-sm-7" style="margin-left: 450px">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Board List Page
-				<button id='regBtn' type="button" class="btn btn-xs pull-right">Register
-					New Board</button>
+				게시판 정보
+				
+				<button id='regBtn' type="button" class="btn btn-xs pull-right">게시글 등록</button>
 			</div>
 
 			<!-- /.panel-heading -->
@@ -37,15 +37,17 @@
 
 					<c:forEach items="${postList}" var="postList">
 						<tr>
-							<td><c:out value="${postList.bno}"/></td>
+							<td><c:out value="${postList.post_num}"/></td>
 
-							<td><a class='move' href='<c:out value="${postList.bno}"/>'> <!--move 클래스 추가 -->
-									<c:out value="${postList.title}"/><!-- 제목 클릭 시 move이벤트 발생 -->
-							</a></td>
+							<td>
+								<a href='/post/get?post_num=<c:out value="${postList.post_num}"/>'> <!--move 클래스 추가 -->
+								<c:out value="${postList.post_title}"/><!-- 제목 클릭 시 move이벤트 발생 -->
+								</a>
+							</td>
 
-							<td><c:out value="${postList.writer}"/></td>
+							<td>권도현</td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${postList.regdate}"/></td>
+									value="${postList.post_date}"/></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -135,7 +137,7 @@
 			</form>
 
 
-			<!-- Modal창   추가 -->
+			<!--Modal창 추가-->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -145,19 +147,19 @@
 								aria-hidden="true">&times;</button>
 							<h4 class="modal-title" id="myModalLabel">Modal title</h4>
 						</div>
-						<div class="modal-body">처리가 완료되었습니다.</div>
+						<div class="modal-body">게시글이 등록되었습니다.</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
+								data-dismiss="modal">닫기</button>
 							<button type="button" class="btn btn-primary">Save
 								changes</button>
 						</div>
 					</div>
 					<!-- /.modal-content -->
 				</div>
-				<!-- /.modal-dialog -->
+				<!--/.modal-dialog-->
 			</div>
-			<!-- /.modal -->
+			<!--/.modal-->
 
 
 		</div>
@@ -165,6 +167,55 @@
 	</div>
 	<!-- end panel -->
 </div>
-</div>
 <!-- /.row -->
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	//변경사항 피드백
+	var result = '<c:out value="${result}"/>'; 	
+	
+	//checkModal 호출
+	checkModal(result); 
+	
+	//등록 후 뒤로가기 누르면 모달창 뜨는 오류해결
+	history.replaceState({}, null, null);
+
+	function checkModal(result){
+	
+		if(result == '' || history.state){
+			return;
+		}
+		
+		if(result === ''){
+			return;
+		}
+	
+		if(parseInt(result) > 0){
+		 	$(".modal-body").html("게시글이 등록되었습니다.");
+		} 
+	
+			$("#myModal").modal("show");
+		
+	}//end checkModal
+	
+	//게시글 등록버튼 클릭 시 등록폼으로 이동
+	$("#regBtn").on("click", function(){
+		
+			self.location = "/post/register";
+	});
+
+
+
+}); //end d.ready
+
+
+
+
+
+
+
+
+</script>
 
