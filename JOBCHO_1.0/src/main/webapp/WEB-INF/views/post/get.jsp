@@ -47,14 +47,14 @@
 
 
 
-
-<form id='operForm' action="/post/update" method="get">
-  <input type='hidden' id='post_num' name='post_num' value='<c:out value="${post.post_num}"/>'> <!--기존 bno 삭제 -->
- <%--  <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
-  <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-  <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
-  <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>    --%>
-</form>
+			<!----------- form으로 데이터 유지 ----------->
+			<form id='operForm' action="/post/update" method="get">
+  				<input type='hidden' id='post_num' name='post_num' value='<c:out value="${post.post_num}"/>'> <!--기존 bno 삭제 -->
+ 				<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+  				<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+  				<%--<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+  				<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>    --%>
+			</form>
 
 
 

@@ -1,12 +1,15 @@
 package org.jobcho.controller;
 
 
+import org.jobcho.domain.Criteria;
+import org.jobcho.domain.PageInfo;
 import org.jobcho.domain.PostVO;
 import org.jobcho.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,18 +30,25 @@ public class PostController {
 	private PostService service;
 	
 	
-	//게시글 전체 리스트
+	//게시글 전체 리스트 + 페이지 처리
 	@GetMapping("/list")
-	public void getListPost(Model model){	
-		log.info("게시글 리스트");
+	public void getListPost(Criteria cri, Model model){	
+	
+		int total = service.getTotalCount(cri);
 		
-		model.addAttribute("postList", service.getListPost());
+		log.info("게시글 리스트");
+		log.info("전체 글 수: " + total);
+		
+		model.addAttribute("postList", service.getListPost(cri));
+		model.addAttribute("pageMaker", new PageInfo(cri, total));
 	}
 	
 	
 	//게시글 상세조회
 	@GetMapping({"/get", "/update"})
-	public void getPost(@RequestParam("post_num") int post_num, Model model) {
+	public void getPost(@RequestParam("post_num") int post_num, 
+								    @ModelAttribute("cri") Criteria cri, Model model) { //상세화면에서 목록으로 갈때 페이지처리
+		
 		log.info("게시글 상세조회: " + post_num);
 		
 		model.addAttribute("post", service.getPost(post_num));
@@ -68,14 +78,17 @@ public class PostController {
 	
 	//게시글 수정
 	@PostMapping("/update")
-	public String updatePost(PostVO post, RedirectAttributes rttr) {
+	public String updatePost(PostVO post, RedirectAttributes rttr,
+											 @ModelAttribute("cri") Criteria cri) {
 		
 		log.info("게시글 수정: " + post.getPost_num());
 		
-		int re = service.updateBoard(post);
-		if(re == 1) {
+		if(service.updateBoard(post) == 1) {
 			rttr.addFlashAttribute("result", " success");
 		}
+		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
 		
 		return "redirect:/post/list";
 	}
@@ -84,11 +97,14 @@ public class PostController {
 	
 	//게시글 삭제
 	@PostMapping("/delete")
-	public String deletePost(@RequestParam("post_num") int post_num, RedirectAttributes rttr) {
-		log.info("삭제 완료! " + post_num);
-		System.out.println("컨트롤러 삭제");
+	public String deletePost(@RequestParam("post_num") int post_num, 
+											@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		
 		service.deletePost(post_num);
+		
+		log.info("삭제 완료! " + post_num);
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
 		
 		return "redirect:/post/list";
 	}

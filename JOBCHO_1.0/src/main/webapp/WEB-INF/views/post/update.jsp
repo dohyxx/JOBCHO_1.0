@@ -20,13 +20,14 @@
 			<div class="panel-heading">게시글 수정</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-
+				
+				<!-- form을 이용해서 데이터 유지 + 수정 정보 전달 -->
 				<form role="form" action="/post/update" method="post">
 
-					<input type='hidden' name='pageNum'value='<c:out value="${cri.pageNum }"/>'> 
-					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'> 
-					<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
-					<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
+						<input type='hidden' name='pageNum'value='<c:out value="${cri.pageNum }"/>'> 
+						<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'> 
+						<%-- <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
+						<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'> --%>
 
 					<div class="form-group">
 						<label>글 번호</label> <input class="form-control" name='post_num'
@@ -60,11 +61,9 @@
 					<button type="submit" data-oper='remove' class="btn btn-danger">삭제</button>
 					<button type="submit" data-oper='list' class="btn btn-info">목록</button>
 				</form>
-
-
+				
 			</div>
 			<!--  end panel-body -->
-
 		</div>
 		<!--  end panel-body -->
 	</div>
@@ -92,7 +91,13 @@ $(document).ready(function() {
 		}
 		else if(operation === 'list'){ //목록버튼 클릭 시
 			formObj.attr("action", "/post/list").attr("method", "get");
-			formObj.empty(); //기존 form내용 삭제시킨 후 list 이동
+		
+			var pageNum = $("input[name='pageNum']").clone();
+			var amountTag = $("input[name='amount']").clone();
+			
+			formObj.empty(); //기존 form내용 삭제시킨 후 list 이동(페이지정보만전달)
+			formObj.append(pageNum);
+			formObj.append(amountTag);
 		}
 		formObj.submit();
 		

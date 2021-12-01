@@ -40,7 +40,7 @@
 							<td><c:out value="${postList.post_num}"/></td>
 
 							<td>
-								<a href='/post/get?post_num=<c:out value="${postList.post_num}"/>'> <!--move 클래스 추가 -->
+								<a class='move' href='<c:out value="${postList.post_num}"/>'> <!--move 클래스 추가 -->
 								<c:out value="${postList.post_title}"/><!-- 제목 클릭 시 move이벤트 발생 -->
 								</a>
 							</td>
@@ -51,8 +51,9 @@
 						</tr>
 					</c:forEach>
 				</table>
-
-				<div class='row'>
+				
+				<!--------------- 검색 처리 ----------------->
+				<%-- <div class='row'>
 					<div class="col-sm-7">
 
 						<form id='searchForm' action="/board/list" method='get'>
@@ -81,29 +82,15 @@
 							<button class='btn btn-default'>Search</button>
 						</form>
 					</div>
-				</div>
+				</div> --%>
 
-
+				<!---------------- 페이지 처리 ----------------->
 				<div class='pull-right'>
 					<ul class="pagination">
-
-			 <%-- <c:if test="${pageMaker.prev}">
-              <li class="paginate_button previous"><a href="#">Previous</a>
-              </li>
-            </c:if>
-
-            <c:forEach var="num" begin="${pageMaker.startPage}"
-              end="${pageMaker.endPage}">
-              <li class="paginate_button"><a href="#">${num}</a></li>
-            </c:forEach>
-
-            <c:if test="${pageMaker.next}">
-              <li class="paginate_button next"><a href="#">Next</a></li>
-            </c:if> --%>
-
+					
 						<c:if test="${pageMaker.prev}">
 							<li class="paginate_button previous"><a
-								href="${pageMaker.startPage -1}">Previous</a></li>
+								href="${pageMaker.startPage -1}">이전</a></li>
 						</c:if>
 
 						<c:forEach var="num" begin="${pageMaker.startPage}"
@@ -116,7 +103,7 @@
 
 						<c:if test="${pageMaker.next}">
 							<li class="paginate_button next"><a
-								href="${pageMaker.endPage +1 }">Next</a></li>
+								href="${pageMaker.endPage +1 }">이후</a></li>
 						</c:if>
 
 
@@ -124,20 +111,9 @@
 				</div>
 				<!--  end Pagination -->
 			</div>
-			
-			<!-- 페이지 번호 이벤트 처리 -->
-			<form id='actionForm' action="/board/list" method='get'>
-				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-
-				<input type='hidden' name='type'
-					value='<c:out value="${ pageMaker.cri.type }"/>'> 
-				<input type='hidden' name='keyword'
-					value='<c:out value="${ pageMaker.cri.keyword }"/>'>
-			</form>
 
 
-			<!--Modal창 추가-->
+			<!----------------Modal창 추가---------------->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -160,14 +136,24 @@
 				<!--/.modal-dialog-->
 			</div>
 			<!--/.modal-->
+			
+								<!---------------form을 이용한 데이터 유지-------------->
+								<form id='actionForm' action="/post/list" method='get'>
+										<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+										<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 
-
+										<%-- <input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
+										<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'> --%>
+								</form>
+			
 		</div>
 		<!--  end panel-body -->
 	</div>
 	<!-- end panel -->
 </div>
 <!-- /.row -->
+
+			
 
 <script type="text/javascript">
 
@@ -206,16 +192,39 @@ $(document).ready(function(){
 			self.location = "/post/register";
 	});
 
+	
+	//페이지 번호 이벤트 처리
+	var actionForm = $("#actionForm");
+	
+	$(".paginate_button a").on("click", function(e){
+		
+		e.preventDefault(); //기본이벤트 삭제
+		console.log('click');
+		
+		actionForm.find("input[name='pageNum']").val($(this).attr("href")); //href의 num값을 form에 넣는다.
+		actionForm.submit();
+		
+	}); //end pageinate 
+	
+	
+	$(".move").on("click", function(e){
+		
+		e.preventDefault();
+		
+		//post_num을 form태그에 담아서 전달
+		actionForm.append("<input type='hidden' name='post_num' value='"+$(this).attr("href")+"'>");
+		actionForm.attr("action", "/post/get");
+		actionForm.submit();
+	});
 
 
+	
+	
+	
+	
+	
+	
+	
 }); //end d.ready
-
-
-
-
-
-
-
-
 </script>
 

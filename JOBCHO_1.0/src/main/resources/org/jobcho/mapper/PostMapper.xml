@@ -13,14 +13,22 @@
 	</insert>
 	
 	
-	<!-- 게시글 리스트 -->
+	<!-- 게시글 리스트 + 페이지 처리 -->
 	<select id="getListPost" resultType="org.jobcho.domain.PostVO">
 		<![CDATA[ 
-				select * from post
-				where board_num = 42
-				and islive = 1
-			]]>
+				select *
+				from(
+					select /*+INDEX_DESC(post SYS_C007525) */
+						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date
+					from post
+					where 
+					rownum <= #{pageNum} * #{amount}
+				)
+				where rn > (#{pageNum} -1) * #{amount}
+				
+		]]>	
 	</select>
+	
 	
 	<!-- 게시글 상세조회 -->
 	<select id="getPost" parameterType="int" resultType="org.jobcho.domain.PostVO">
@@ -45,7 +53,11 @@
 	</delete>
 	
 	
-	
+	<!-- 전체 글 수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from post 
+		where post_num > 0
+	</select>
 	
 	
 

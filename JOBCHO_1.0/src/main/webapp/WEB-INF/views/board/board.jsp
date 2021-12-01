@@ -80,7 +80,7 @@
 
                     <!--프로필-->
                     <div>
-                        <div class="nav-profile-image-left" style="background-image: /resources/post_and_board/99D279435B3D788602.jfif"></div>
+                        <div class="nav-profile-image-left"></div>
                         <div class="nav-profile-content-left">
                             <p>cjhun0516@gmail.com</p>
                             <p>2팀 팀장</p>

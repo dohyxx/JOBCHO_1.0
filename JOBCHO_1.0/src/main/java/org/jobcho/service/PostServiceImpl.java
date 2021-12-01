@@ -3,6 +3,7 @@ package org.jobcho.service;
 
 import java.util.List;
 
+import org.jobcho.domain.Criteria;
 import org.jobcho.domain.PostVO;
 import org.jobcho.mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,12 @@ public class PostServiceImpl implements PostService {
 		return mapper.insertPost(post);
 	}
 
+	
 	@Override
-	public List<PostVO> getListPost() {
-		log.info("서비스 게시글 리스트");
+	public List<PostVO> getListPost(Criteria cri) {
+		log.info("서비스 게시글 리스트: " + cri);
 		
-		return mapper.getListPost();
+		return mapper.getListPost(cri);
 	}
 	
 	@Override
@@ -55,6 +57,14 @@ public class PostServiceImpl implements PostService {
 		log.info("서비스 게시글 삭제");
 		System.out.println("서비스 삭제");
 		mapper.deletePost(post_num);
+	}
+
+
+	@Override
+	public int getTotalCount(Criteria cri) {
+		log.info("전체 글 수 불러오기");
+		
+		return mapper.getTotalCount(cri);
 	}
 
 	
