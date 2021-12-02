@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@include file="/WEB-INF/views/board/board.jsp"%>
+<%@include file="/WEB-INF/views/board/main.jsp"%>
 
 
 
@@ -178,23 +178,24 @@ $(document).ready(function(){
 			return;
 		}
 	
-		if(parseInt(result) > 0){
+		 if(parseInt(result) > 0){
 		 	$(".modal-body").html("게시글이 등록되었습니다.");
+		 	$("#myModal").modal("show"); 
 		} 
 	
-			$("#myModal").modal("show");
+			
 		
 	}//end checkModal
+	
+	//페이지 번호 이벤트 처리
+	var actionForm = $("#actionForm");
 	
 	//게시글 등록버튼 클릭 시 등록폼으로 이동
 	$("#regBtn").on("click", function(){
 		
-			self.location = "/post/register";
+		self.location = "/post/register";
 	});
 
-	
-	//페이지 번호 이벤트 처리
-	var actionForm = $("#actionForm");
 	
 	$(".paginate_button a").on("click", function(e){
 		

@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="/resources/post_and_board/sidebar-left.css">
     <link rel="stylesheet" href="/resources/post_and_board/content.css">
     
+    
 
 
     <header>
@@ -39,16 +40,16 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">소개<span class="sr-only"></span></a></li>
-                        <li ><a href="#">강사진<span class="sr-only"></span></a></li>
+                        <li class="active"><a href="#">마이페이지<span class="sr-only"></span></a></li>
+                        <!-- <li ><a href="#">강사진<span class="sr-only"></span></a></li> -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                             aria-haspopup="true" aria-expanded="false"
-                            >강의 <span class="caret"></span></a>
+                            >알림 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">c언어</a></li>
-                                <li><a href="#">c언어</a></li>
-                                <li><a href="#">c언어</a></li>
+                                <li><a href="#">쪽지</a></li>
+                                <li><a href="#">박건수님이 언급하셨습니다.</a></li>
+                                <li><a href="#">채팅</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -92,15 +93,9 @@
                         <!--게시판 영역-->
                         <!--게시판 영역-->
                         <h3>토픽 <a href="#" class="collapse__sublink-left" id="createBoard"><ion-icon name="add-outline" ></ion-icon></a></h3>
-                        <div class="nav__list-left nav__scroll-left">
+                        <div class="nav__list-left nav__scroll-left" id="board">
                         
-                        <c:forEach items="${board}" var="board">
-							<a href='/board/post?bno=<c:out value="${board.board_num }"/>' class="nav__link-left active-left">
-                                <ion-icon name="home-outline" class="nav__icon-left"></ion-icon>
-                                <span class="nav__name-left">${board.board_name }</span>
-                            </a>
-						</c:forEach>
-                            
+							
                             
                             
                             <!-- <a href="#" class="nav__link-left">
@@ -232,7 +227,7 @@
     <!-- 컨텐츠 시작-->
 
 <!-- 게시판 생성 모달창 -->
-     <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+      <div class="modal" id="modal" tabindex="-1" role="dialog"
         aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -244,38 +239,33 @@
             <div class="modal-body">
               <div class="form-group">
                 <label>게시판 이름</label> 
-                <input class="form-control" name='boardName' value='New Reply!!!!'>
+                <input class="form-control" name='board_name' value='New Reply!!!!'>
               </div>      
               <div class="form-group">
                 <label>게시판 정보</label> 
-                <input class="form-control" name='boardInfo' value='replyer'>
+                <input class="form-control" name='board_info' value='replyer'>
               </div>
               <div class="form-group">
                 <label>작성자</label> 
                 <input class="form-control" name='member_name' value='member_name'>
               </div>
-      
             </div>
             
 		<div class="modal-footer">
-        	<button id='modalModBtn' type="button" class="btn btn-warning">Modify</button>
-        	<button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
-        	<button id='modalRegisterBtn' type="button" class="btn btn-primary">Register</button>
-        	<button id='modalCloseBtn' type="button" class="btn btn-default">Close</button>
+        	<button id='modalRegisterBtn' type="button" class="btn btn-primary">등록</button>
+        	<button id='modalCloseBtn' type="button" class="btn btn-default">취소</button>
        </div>
-       
-		</div>
-          /.modal-content
-        </div>
-        /.modal-dialog
-      </div>
-      /.modal  -->
-      
-    <!-- 컨텐츠 끝-->
-    <!-- 컨텐츠 끝-->
+	</div>
+  </div>
+</div><!--  end modal-->
 
-    <!-- modal 모음-->
-    <!-- <div class="row">
+<!-- 컨텐츠 끝-->
+<!-- 컨텐츠 끝-->
+
+
+
+    <!--팀원초대 modal -->
+     <!-- <div class="row">
         <div class="modal" id="modal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -295,82 +285,101 @@
                                     <li class="list-group-item">Dolor</li>
                                     <li class="list-group-item">Ipsum</li>
                                     <li class="list-group-item">Dolor</li>
-                                    <li class="list-group-item">Ipsum</li>
-                                    <li class="list-group-item">Dolor</li>
-                                    <li class="list-group-item">Ipsum</li>
-                                    <li class="list-group-item">Dolor</li>
-                                    <li class="list-group-item">Ipsum</li>
-                                    <li class="list-group-item">Dolor</li>
-                                    <li class="list-group-item">Ipsum</li>
-                                    <li class="list-group-item">Dolor</li>
-                                    <li class="list-group-item">Ipsum</li>
-                                    <li class="list-group-item">Dolor</li>
-                                    <li class="list-group-item">Ipsum</li>
-                                    <li class="list-group-item">Dolor</li>
-                                    <li class="list-group-item">Ipsum</li>
-                                    <li class="list-group-item">Dolor</li>
-                                    <li class="list-group-item">Ipsum</li>
-                                    <li class="list-group-item">Dolor</li>
-                                    <li class="list-group-item">Ipsum</li>
-                                    <li class="list-group-item">Dolor</li>
-
+                                    <li class="list-group-item">Ipsum</li>                                 
                                 </ul>
                             </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
- -->
+    </div> -->
  
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
     <script src="/resources/post_and_board/sidebar-right.js"></script>
     <script src="/resources/post_and_board/sidebar-left.js"></script>
-	<script type="text/javascript" src="/resources/js/board.js"></script>
+	<script type="text/javascript" src="/resources/js/board.js?version=20211203"></script>
 
-<script >
+
+<script>
+//main.jsp 로딩 시 항상 불러와야할 정보들
+$(document).ready(function(){	
+	
+	var boardUL = $("#board"); //게시판 리스트 들어가는 부분
+	
+	showList(); //게시판 목록 호출
+	
+	function showList(){
+		listBoard.getListBoard(function(board){ //board.js 메서드 호출
+			console.log("게시판 목록 불러오기");
+			var str ="";
+			
+			for(var i = 0; i < board.length; i++){
+                str +="<a href='#' class='nav__link-left'>";
+                str +="<ion-icon name='home-outline' class='nav__icon-left'></ion-icon>";
+				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>";
+				str +="</a>"; 
+			}
+			boardUL.html(str); //html 추가
+		});
+	}
+	
+
+}); //end document.ready1
+
+
+
+//===========================================
+
+	
 
 $(document).ready(function(){
 	
 	//모달창에 입력한 데이터 값 저장
-    var modal = $(".modal");
-    var modalInputReply = modal.find("input[name='boardName']");
-    var modalInputReplyer = modal.find("input[name='boardInfo']");
-    var modalInputReplyDate = modal.find("input[name='member_name']");
+    var boardModal = $(".modal");
+    var modalInputReply = boardModal.find("input[name='board_name']");
+    var modalInputReplyer = boardModal.find("input[name='board_info']");
+    var modalInputReplyDate = boardModal.find("input[name='member_name']");
     
-    var modalModBtn = $("#modalModBtn");
-    var modalRemoveBtn = $("#modalRemoveBtn");
+    /* var modalModBtn = $("#modalModBtn"); */
     var modalRegisterBtn = $("#modalRegisterBtn");
 	
 	
 	//모달창 닫기 버튼
     $("#modalCloseBtn").on("click", function(e){
     	
-    	modal.modal('hide');
+    	boardModal.modal('hide');
     });
 
-	//게시판 생성 버튼 클릭시 모달창을 보여준다.
-	$("#createBoard").on("click", function(e){
+	
+	//게시판 생성 버튼 + 클릭시 모달창을 보여준다.
+	 $("#createBoard").on("click", function(e){
 		
-		e.preventDefault(); //<a>태그 기본이벤트 삭제
+		console.log("게시판 생성 모달창")
+		e.preventDefault(); // a태그 기본이벤트 삭제
 		
-		 modal.find("input").val("");
+		boardModal.find("input").val("");
 	     /* modalInputReplyDate.closest("div").hide(); */
-	     modal.find("button[id !='modalCloseBtn']").hide(); //Close버튼이 아니면 숨기기
+	      boardModal.find("button[id !='modalCloseBtn']").hide(); //Close버튼이 아니면 숨기기
 	      
 	     modalRegisterBtn.show();
 	     modalInputReplyDate.show();
 		
-		$(".modal").modal("show");
+		$(".modal").modal("show"); 
 		
-	}); // end createBoard
+		}); // end createBoard 
+	
+	 
 	
 	
 	
 	
 	
 	
-}); //end document.ready
+	
+	
+	
+	
+}); //end document.ready2
 
 
 </script>

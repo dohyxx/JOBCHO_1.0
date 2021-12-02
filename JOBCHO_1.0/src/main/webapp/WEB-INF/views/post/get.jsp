@@ -2,7 +2,8 @@
   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@include file="/WEB-INF/views/board/board.jsp"%>
+<%@include file="/WEB-INF/views/board/main.jsp"%>
+
 
 
 <div class="row" style="margin-top: 80px">

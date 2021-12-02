@@ -2,12 +2,12 @@
   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@include file="/WEB-INF/views/board/board.jsp"%>
+<%@include file="/WEB-INF/views/board/main.jsp"%>
 
 
 <div class="row" style="margin-top: 100px">
   <div class="col-sm-7" style="margin-left: 450px">
-    <h2 class="page-header">게시글 작성하기</h2>
+    <h2 class="page-header">게시판 이름</h2>
   </div>
   <!-- /.col-lg-12 -->
 </div>
@@ -65,6 +65,7 @@
       <!-- /.panel-heading -->
       <div class="panel-body">
 
+
         <form role="form" action="/post/register" method="post">
           <div class="form-group">
             <label>제목</label> <input class="form-control" name='post_title'>
@@ -79,7 +80,7 @@
             <label>작성자</label> <input class="form-control" name='writer'>
           </div>
           <button type="submit" class="btn btn-default">등록</button>
-          <button type="reset" class="btn btn-default">취소</button>
+          <button id='reset' type="reset" class="btn btn-default">취소</button>
         </form>
 
       </div>
@@ -121,11 +122,26 @@
 </div>
 /.row -->
 
+						<!---------------form을 이용한 데이터 유지-------------->
+						<form id='actionForm' action="/post/list" method='get'>
+								<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+								<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+
+								<%-- <input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
+								<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'> --%>
+						</form>
+
 <script>
 
-$(document).ready(function(e){
+$(document).ready(function(){
 
 	
+	var actionForm = $("#form");
+	
+	$("#reset").on("click", function(e){
+		
+			self.location ="/post/list";
+		});
 
  
 

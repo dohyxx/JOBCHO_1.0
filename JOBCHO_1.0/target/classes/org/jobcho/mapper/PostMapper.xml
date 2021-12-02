@@ -19,12 +19,14 @@
 				select *
 				from(
 					select /*+INDEX_DESC(post SYS_C007525) */
-						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date
+						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date, islive
 					from post
 					where 
 					rownum <= #{pageNum} * #{amount}
+					and islive = 1
 				)
 				where rn > (#{pageNum} -1) * #{amount}
+				and islive = 1
 				
 		]]>	
 	</select>
@@ -57,6 +59,7 @@
 	<select id="getTotalCount" resultType="int">
 		select count(*) from post 
 		where post_num > 0
+		and islive = 1
 	</select>
 	
 	
