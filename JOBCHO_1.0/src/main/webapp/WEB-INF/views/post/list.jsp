@@ -123,12 +123,10 @@
 								aria-hidden="true">&times;</button>
 							<h4 class="modal-title" id="myModalLabel">Modal title</h4>
 						</div>
-						<div class="modal-body">게시글이 등록되었습니다.</div>
+						<div class="modal-body"></div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">닫기</button>
-							<button type="button" class="btn btn-primary">Save
-								changes</button>
 						</div>
 					</div>
 					<!-- /.modal-content -->
@@ -177,15 +175,15 @@ $(document).ready(function(){
 		if(result === ''){
 			return;
 		}
-	
-		 if(parseInt(result) > 0){
+		
+	 	if(parseInt(result) > 0){
 		 	$(".modal-body").html("게시글이 등록되었습니다.");
 		 	$("#myModal").modal("show"); 
-		} 
-	
-			
-		
+		 	console.log("게시글 등록모달");
+		} 	
 	}//end checkModal
+	
+	
 	
 	//페이지 번호 이벤트 처리
 	var actionForm = $("#actionForm");
@@ -196,18 +194,18 @@ $(document).ready(function(){
 		self.location = "/post/register";
 	});
 
-	
+	//페이지 번호 이벤트 적용
 	$(".paginate_button a").on("click", function(e){
 		
-		e.preventDefault(); //기본이벤트 삭제
+		e.preventDefault();
 		console.log('click');
 		
 		actionForm.find("input[name='pageNum']").val($(this).attr("href")); //href의 num값을 form에 넣는다.
 		actionForm.submit();
-		
 	}); //end pageinate 
 	
 	
+	//게시글 상세조회
 	$(".move").on("click", function(e){
 		
 		e.preventDefault();

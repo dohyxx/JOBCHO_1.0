@@ -55,7 +55,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" role="button" data-target="#modal" data-toggle="modal"
+                            <a href="#" role="button" data-target="#teamModal" data-toggle="modal"
                             aria-haspopup="true" aria-expanded="false"
                             ><ion-icon name="person-add-outline" class="navbar-icon"></ion-icon>팀원초대</a>
 
@@ -92,7 +92,11 @@
                     <div >
                         <!--게시판 영역-->
                         <!--게시판 영역-->
-                        <h3>토픽 <a href="#" class="collapse__sublink-left" id="createBoard"><ion-icon name="add-outline" ></ion-icon></a></h3>
+                        <h3>토픽 
+                        	<a href="#" class="collapse__sublink-left" id="createBoard" data-target="#modal" data-toggle="modal">
+                        		<ion-icon name="add-outline" ></ion-icon>
+                        	</a>
+                        </h3>
                         <div class="nav__list-left nav__scroll-left" id="board">
                         
 							
@@ -220,11 +224,10 @@
     <!--오른쪽 사이드바 끝-->
     <!--오른쪽 사이드바 끝-->
 
+    
+    <!-- 컨텐츠 시작-->
+    <!-- 컨텐츠 시작-->
 
-    
-    
-    <!-- 컨텐츠 시작-->
-    <!-- 컨텐츠 시작-->
 
 <!-- 게시판 생성 모달창 -->
       <div class="modal" id="modal" tabindex="-1" role="dialog"
@@ -239,11 +242,11 @@
             <div class="modal-body">
               <div class="form-group">
                 <label>게시판 이름</label> 
-                <input class="form-control" name='board_name' value='New Reply!!!!'>
+                <input class="form-control" name='board_name' value=''>
               </div>      
               <div class="form-group">
                 <label>게시판 정보</label> 
-                <input class="form-control" name='board_info' value='replyer'>
+                <input class="form-control" name='board_info' value=''>
               </div>
               <div class="form-group">
                 <label>작성자</label> 
@@ -262,11 +265,9 @@
 <!-- 컨텐츠 끝-->
 <!-- 컨텐츠 끝-->
 
-
-
     <!--팀원초대 modal -->
-     <!-- <div class="row">
-        <div class="modal" id="modal" tabindex="-1">
+       <div class="row">
+        <div class="modal" id="teamModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -292,8 +293,15 @@
                 </div>
             </div>
         </div>
-    </div> -->
- 
+    </div> 
+    
+    
+    	<form id='actionForm' action="/post/list" method='get'>
+				<input type='hidden' name='board_num' value='${pageMaker.cri.pageNum}'>
+				
+		</form>
+    
+
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
     <script src="/resources/post_and_board/sidebar-right.js"></script>
     <script src="/resources/post_and_board/sidebar-left.js"></script>
@@ -301,20 +309,21 @@
 
 
 <script>
-//main.jsp 로딩 시 항상 불러와야할 정보들
+
 $(document).ready(function(){	
 	
 	var boardUL = $("#board"); //게시판 리스트 들어가는 부분
 	
-	showList(); //게시판 목록 호출
+	//========게시판 목록 호출=======
+	showList(); 
 	
 	function showList(){
 		listBoard.getListBoard(function(board){ //board.js 메서드 호출
-			console.log("게시판 목록 불러오기");
+			console.log("게시판 목록 callback");
 			var str ="";
 			
 			for(var i = 0; i < board.length; i++){
-                str +="<a href='#' class='nav__link-left'>";
+                str +="<a href='"+board[i].board_num"' class='nav__link-left'>";
                 str +="<ion-icon name='home-outline' class='nav__icon-left'></ion-icon>";
 				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>";
 				str +="</a>"; 
@@ -322,26 +331,19 @@ $(document).ready(function(){
 			boardUL.html(str); //html 추가
 		});
 	}
-	
-
-}); //end document.ready1
 
 
+//==========Modal==========
 
-//===========================================
-
-	
-
-$(document).ready(function(){
-	
 	//모달창에 입력한 데이터 값 저장
-    var boardModal = $(".modal");
-    var modalInputReply = boardModal.find("input[name='board_name']");
-    var modalInputReplyer = boardModal.find("input[name='board_info']");
-    var modalInputReplyDate = boardModal.find("input[name='member_name']");
+    var boardModal = $("#modal");
+    var modalInputBoardName = boardModal.find("input[name='board_name']");
+    var modalInputBoardInfo = boardModal.find("input[name='board_info']");
+    /* var modalInputReplyDate = boardModal.find("input[name='member_name']"); */
     
-    /* var modalModBtn = $("#modalModBtn"); */
     var modalRegisterBtn = $("#modalRegisterBtn");
+    var modalModBtn = $("#modalModBtn");
+ 
 	
 	
 	//모달창 닫기 버튼
@@ -350,7 +352,6 @@ $(document).ready(function(){
     	boardModal.modal('hide');
     });
 
-	
 	//게시판 생성 버튼 + 클릭시 모달창을 보여준다.
 	 $("#createBoard").on("click", function(e){
 		
@@ -363,23 +364,47 @@ $(document).ready(function(){
 	      
 	     modalRegisterBtn.show();
 	     modalInputReplyDate.show();
-		
-		$(".modal").modal("show"); 
+	     
+		$("#modal").modal("show");
 		
 		}); // end createBoard 
 	
 	 
+		//=========게시판 생성============
+		modalRegisterBtn.on("click", function(e){
+			
+			var board = {
+					board_name: modalInputBoardName.val(),
+					board_info: modalInputBoardInfo.val()
+			};
+			
+			listBoard.insertBoard(board, function(result){
+				alert("게시판이 생성되었습니다.");
+	
+				boardModal.modal("hide");
+				
+				showList();
+			});
+		});
+	
+	
+		//======게시판 이름 클릭시 게시글로 이동======
+		var actionForm = $("#actionForm");
+		
+		boardUL.on("click", "a", function(e){
+			
+			e.preventDefault();
+			
+			actionForm.find("input[name='board_num']").val($(this).attr("href"));
+			action.submit();
+		});
 	
 	
 	
 	
 	
 	
-	
-	
-	
-	
-}); //end document.ready2
 
 
+}); //end document.ready1
 </script>

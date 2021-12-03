@@ -32,7 +32,7 @@ public class PostController {
 	
 	//게시글 전체 리스트 + 페이지 처리
 	@GetMapping("/list")
-	public void getListPost(Criteria cri, Model model){	
+	public void getListPost(Criteria cri, Model model, @RequestParam("board_num") int board_num){	
 	
 		int total = service.getTotalCount(cri);
 		
@@ -69,8 +69,8 @@ public class PostController {
 		post.setBoard_num(62);
 		post.setMember_num(1);
 		
-		service.insertPost(post);
-		rttr.addFlashAttribute("result", post.getBoard_num());
+		
+		rttr.addFlashAttribute("result", service.insertPost(post));
 		
 		return "redirect:/post/list";
 	}

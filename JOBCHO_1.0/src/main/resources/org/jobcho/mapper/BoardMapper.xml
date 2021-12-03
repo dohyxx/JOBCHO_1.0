@@ -9,7 +9,8 @@
 	<!-- 게시판 목록 가져오기 -->
 	<select id="getListBoard" resultType="org.jobcho.domain.BoardVO">
 		<![CDATA[ 
-			select * from board  
+			select  /*+INDEX_ASC(board SYS_C007522) */ * from board
+			where islive = 1
 		]]>
 	</select>
 	
@@ -17,9 +18,9 @@
 	<!-- 게시판 생성 -->
 	<insert id="insertBoard" parameterType="org.jobcho.domain.BoardVO"> 
 		<![CDATA[ 
-			insert into board(board_num, board_name, board_info) 
+			insert into board
 				values(
-					board_num.nextval, #{board_name}, #{board_info}
+					board_num.nextval, #{board_name}, #{board_info}, #{team_num}, #{member_num}, default, default
 				)
 		]]>
 	</insert>

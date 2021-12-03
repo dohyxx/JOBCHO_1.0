@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +49,6 @@ public class BoardController {
 	@ResponseBody
 	public ResponseEntity<List<BoardVO>> getListBoard(){
 		
-		System.out.println("리스트 호출");
 		List<BoardVO> board = service.getListBoard();
 		System.out.println("board: " + board);
 		return new ResponseEntity<>(board, HttpStatus.OK);
@@ -54,10 +56,25 @@ public class BoardController {
 	
 	
 	
-	/*
+	/* REST API
 	 * 게시판 생성
 	 * 
 	 */
+	@PostMapping("/{team_num}/new")
+	@ResponseBody
+	public ResponseEntity<BoardVO> insertBoard(@RequestBody BoardVO board,
+																				@PathVariable("team_num") int team_num){
+		
+		System.out.println("컨트롤러 insertBoard");
+		board.setMember_num(1);
+		board.setTeam_num(team_num);
+		int insertCount = service.insertBoard(board);
+		log.info("게시판 생성: " + board);
+		
+		return insertCount == 1
+				? new ResponseEntity<>(HttpStatus.OK)
+				:  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
 	
 	/*

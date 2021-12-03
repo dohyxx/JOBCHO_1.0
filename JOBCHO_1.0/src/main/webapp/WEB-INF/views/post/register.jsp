@@ -140,7 +140,7 @@ $(document).ready(function(){
 	
 	$("#reset").on("click", function(e){
 		
-			self.location ="/post/list";
+		window.location.href = "/post/list";
 		});
 
  
