@@ -298,14 +298,13 @@
     
     	<form id='actionForm' action="/post/list" method='get'>
 				<input type='hidden' name='board_num' value='${pageMaker.cri.pageNum}'>
-				
 		</form>
     
 
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
     <script src="/resources/post_and_board/sidebar-right.js"></script>
     <script src="/resources/post_and_board/sidebar-left.js"></script>
-	<script type="text/javascript" src="/resources/js/board.js?version=20211203"></script>
+	<script type="text/javascript" src="/resources/js/board.js?version=20211204"></script>
 
 
 <script>
@@ -323,7 +322,7 @@ $(document).ready(function(){
 			var str ="";
 			
 			for(var i = 0; i < board.length; i++){
-                str +="<a href='"+board[i].board_num"' class='nav__link-left'>";
+                str +="<a href='"+board[i].board_num+"' class='nav__link-left'>";
                 str +="<ion-icon name='home-outline' class='nav__icon-left'></ion-icon>";
 				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>";
 				str +="</a>"; 
@@ -391,12 +390,13 @@ $(document).ready(function(){
 		//======게시판 이름 클릭시 게시글로 이동======
 		var actionForm = $("#actionForm");
 		
-		boardUL.on("click", "a", function(e){
+		$("#board").on("click", "a", function(e){
 			
+			console.log("게시글로 이동")
 			e.preventDefault();
 			
 			actionForm.find("input[name='board_num']").val($(this).attr("href"));
-			action.submit();
+			actionForm.submit();
 		});
 	
 	

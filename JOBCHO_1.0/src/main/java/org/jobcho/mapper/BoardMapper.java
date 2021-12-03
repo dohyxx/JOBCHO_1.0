@@ -1,5 +1,6 @@
 package org.jobcho.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.jobcho.domain.BoardVO;

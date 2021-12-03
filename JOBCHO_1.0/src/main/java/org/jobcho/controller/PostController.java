@@ -1,6 +1,8 @@
 package org.jobcho.controller;
 
 
+import java.util.HashMap;
+
 import org.jobcho.domain.Criteria;
 import org.jobcho.domain.PageInfo;
 import org.jobcho.domain.PostVO;
@@ -34,13 +36,19 @@ public class PostController {
 	@GetMapping("/list")
 	public void getListPost(Criteria cri, Model model, @RequestParam("board_num") int board_num){	
 	
-		int total = service.getTotalCount(cri);
+		int total = service.getTotalCount(board_num);
 		
 		log.info("게시글 리스트");
 		log.info("전체 글 수: " + total);
+		System.out.println("게시글 리스트!!" + board_num);
 		
-		model.addAttribute("postList", service.getListPost(cri));
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("board_num", board_num);
+		map.put("cri", cri);
+		
+		model.addAttribute("postList", service.getListPost(map));
 		model.addAttribute("pageMaker", new PageInfo(cri, total));
+		model.addAttribute("board_num", board_num);
 	}
 	
 	

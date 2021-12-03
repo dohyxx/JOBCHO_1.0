@@ -1,6 +1,7 @@
 
 package org.jobcho.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.jobcho.domain.Criteria;
@@ -32,10 +33,10 @@ public class PostServiceImpl implements PostService {
 
 	
 	@Override
-	public List<PostVO> getListPost(Criteria cri) {
-		log.info("서비스 게시글 리스트: " + cri);
+	public List<PostVO> getListPost(HashMap<String, Object> map) {
+		log.info("서비스 게시글 리스트: " + map);
 		
-		return mapper.getListPost(cri);
+		return mapper.getListPost(map);
 	}
 	
 	@Override
@@ -61,10 +62,10 @@ public class PostServiceImpl implements PostService {
 
 
 	@Override
-	public int getTotalCount(Criteria cri) {
+	public int getTotalCount(int board_num) {
 		log.info("전체 글 수 불러오기");
 		
-		return mapper.getTotalCount(cri);
+		return mapper.getTotalCount(board_num);
 	}
 
 	
