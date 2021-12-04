@@ -43,8 +43,8 @@
             value='<c:out value="${post.board_num }"/>' readonly="readonly">
         </div>
 		
-<button data-oper='modify' class="btn btn-default">수정</button>
-<button data-oper='list' class="btn btn-info">목록</button>
+<button data-oper='modify' class="btn btn-info">수정</button>
+<button data-oper='list' class="btn btn-default">목록</button>
 
 
 

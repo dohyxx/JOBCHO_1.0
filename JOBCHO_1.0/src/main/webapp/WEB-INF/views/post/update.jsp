@@ -59,9 +59,9 @@
 					
 
 					<!-- 전송버튼 -->
-					<button type="submit" data-oper='modify' class="btn btn-default">수정</button>
+					<button type="submit" data-oper='modify' class="btn btn-info">수정</button>
 					<button type="submit" data-oper='remove' class="btn btn-danger">삭제</button>
-					<button type="submit" data-oper='list' class="btn btn-info">목록</button>
+					<button type="submit" data-oper='list' class="btn btn-default">목록</button>
 				</form>
 				
 			</div>

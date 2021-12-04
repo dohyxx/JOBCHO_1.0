@@ -66,7 +66,9 @@ public class PostController {
 	
 	//게시글 생성 1.등록폼 이동
 	@GetMapping("/register")
-	public void register() {
+	public void register(@RequestParam("board_num") int board_num, Model model) {
+		
+		model.addAttribute("board_num", board_num);
 	}
 	
 	//게시글 생성 2.DB저장, 리스트로 이동
@@ -75,11 +77,12 @@ public class PostController {
 		
 		log.info("게시글 등록: " + post.getPost_title());
 		
-		post.setBoard_num(62);
+		post.setBoard_num(post.getBoard_num());
 		post.setMember_num(1);
-		
+		System.out.println("게시글 등록: " + post.getBoard_num());
 		
 		rttr.addFlashAttribute("result", service.insertPost(post));
+		rttr.addAttribute("board_num", post.getBoard_num());
 		
 		return "redirect:/post/list";
 	}

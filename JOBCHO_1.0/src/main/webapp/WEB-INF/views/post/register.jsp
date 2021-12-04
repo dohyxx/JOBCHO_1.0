@@ -67,6 +67,11 @@
 
 
         <form role="form" action="/post/register" method="post">
+        			
+        	<input type='hidden' name='board_num' value='<c:out value="${board_num}"/>'>
+			
+						
+        		
           <div class="form-group">
             <label>제목</label> <input class="form-control" name='post_title'>
           </div>
@@ -79,7 +84,7 @@
           <div class="form-group">
             <label>작성자</label> <input class="form-control" name='writer'>
           </div>
-          <button type="submit" class="btn btn-default">등록</button>
+          <button type="submit" class="btn btn-primary">등록</button>
           <button id='reset' type="reset" class="btn btn-default">취소</button>
         </form>
 
@@ -122,26 +127,24 @@
 </div>
 /.row -->
 
-						<!---------------form을 이용한 데이터 유지-------------->
-						<form id='actionForm' action="/post/list" method='get'>
-								<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-								<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-
-								<%-- <input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
-								<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'> --%>
-						</form>
+						
+								
 
 <script>
 
 $(document).ready(function(){
 
 	
-	var actionForm = $("#form");
+	var formObj = $("form");
 	
+	//취소 버튼 클릭 시 board_num만 가지고 리스트로
 	$("#reset").on("click", function(e){
 		
-		window.location.href = "/post/list";
-		});
+		formObj.empty(); 
+		formObj.attr("action", "/post/list").attr("method", "get");
+		formObj.append("<input type='hidden' name='board_num' value='"+${board_num}+"'>");
+		formObj.submit();
+	});
 
  
 

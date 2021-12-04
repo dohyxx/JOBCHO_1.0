@@ -20,7 +20,7 @@
 			<div class="panel-heading">
 				게시판 정보
 				
-				<button id='regBtn' type="button" class="btn btn-xs pull-right">게시글 등록</button>
+				<button id='regBtn' type="button" class="btn btn-primary btn-xs pull-right">글쓰기</button>
 			</div>
 
 			<!-- /.panel-heading -->
@@ -98,7 +98,7 @@
 							end="${pageMaker.endPage}">
 							<!--선택한 번호 이벤트처리(삼항연산자) -->
 							<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
-								<a href="${num}">${num}</a><!--이벤트 처리해야함 -->
+								<a href="${num}">${num}</a><!--이벤트 처리-->
 							</li>
 						</c:forEach>
 
@@ -106,7 +106,7 @@
 							<li class="paginate_button next"><a
 								href="${pageMaker.endPage +1 }">이후</a></li>
 						</c:if>
-
+						
 
 					</ul>
 				</div>
@@ -140,10 +140,7 @@
 								<form id='actionForm' action="/post/list" method='get'>
 										<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 										<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-										<input type='hidden' name='board_num' value='<c:out value="${board_num}"/>'>
-
-										<%-- <input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
-										<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'> --%>
+										<input type='hidden' name='board_num' value='${board_num}'>
 								</form>
 			
 		</div>
@@ -193,19 +190,12 @@ $(document).ready(function(){
 	//게시글 등록버튼 클릭 시 등록폼으로 이동
 	$("#regBtn").on("click", function(){
 		
-		self.location = "/post/register";
-	});
-	
-
-	//페이지 번호 이벤트 적용
-	$(".paginate_button a").on("click", function(e){
-		
-		e.preventDefault();
-		console.log('click');
-		
-		actionForm.find("input[name='pageNum']").val($(this).attr("href")); //href의 num값을 form에 넣는다.
+		console.log("게시글 등록버튼클릭: " +${board_num});
+		actionForm.empty();
+		actionForm.append("<input type='hidden' name='board_num' value='"+${board_num}+"'>");
+		actionForm.attr("action", "/post/register");
 		actionForm.submit();
-	}); //end pageinate 
+	});
 	
 	
 	//게시글 상세조회
@@ -214,16 +204,29 @@ $(document).ready(function(){
 		e.preventDefault();
 		
 		//post_num을 form태그에 담아서 전달
+		actionForm.empty();
+		actionForm.append("<input type='hidden' name='board_num' value='"+${board_num}+"'>");
 		actionForm.append("<input type='hidden' name='post_num' value='"+$(this).attr("href")+"'>");
 		
 		actionForm.attr("action", "/post/get");
 		actionForm.submit();
 		
-		console.log("리스트에서 상세조회로 전달: ");
+		console.log("리스트에서 상세조회로 전달: " +${board_num});
 	});
 
 
-	
+	//페이지 번호 이벤트 적용
+	$(".paginate_button a").on("click", function(e){
+		
+		e.preventDefault();
+		console.log("페이지 이벤트: " +${board_num});
+		
+		actionForm.empty();
+		actionForm.append("<input type='hidden' name='board_num' value='"+${board_num}+"'>");
+		actionForm.append("<input type='hidden' name='pageNum' value='"+ $(this).attr("href")+ "'>"); //href의 num값을 form에 넣는다.
+		
+		actionForm.submit();
+	}); //end pageinate 
 	
 	
 	

@@ -304,7 +304,7 @@
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
     <script src="/resources/post_and_board/sidebar-right.js"></script>
     <script src="/resources/post_and_board/sidebar-left.js"></script>
-	<script type="text/javascript" src="/resources/js/board.js?version=20211204"></script>
+	<script type="text/javascript" src="/resources/js/board.js?version=20211203"></script>
 
 
 <script>
@@ -317,7 +317,9 @@ $(document).ready(function(){
 	showList(); 
 	
 	function showList(){
+		
 		listBoard.getListBoard(function(board){ //board.js 메서드 호출
+			
 			console.log("게시판 목록 callback");
 			var str ="";
 			
@@ -343,8 +345,6 @@ $(document).ready(function(){
     var modalRegisterBtn = $("#modalRegisterBtn");
     var modalModBtn = $("#modalModBtn");
  
-	
-	
 	//모달창 닫기 버튼
     $("#modalCloseBtn").on("click", function(e){
     	
