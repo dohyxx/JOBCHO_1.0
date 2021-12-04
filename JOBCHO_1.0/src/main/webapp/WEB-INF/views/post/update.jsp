@@ -24,8 +24,9 @@
 				<!-- form을 이용해서 데이터 유지 + 수정 정보 전달 -->
 				<form role="form" action="/post/update" method="post">
 
-						<input type='hidden' name='pageNum'value='<c:out value="${cri.pageNum }"/>'> 
-						<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'> 
+						<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> 
+						<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+						<input type='hidden' name='board_num' value='<c:out value="${post.board_num}"/>'> 
 						<%-- <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
 						<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'> --%>
 
@@ -55,6 +56,7 @@
 							value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${post.post_date}" />'
 							readonly="readonly">
 					</div>
+					
 
 					<!-- 전송버튼 -->
 					<button type="submit" data-oper='modify' class="btn btn-default">수정</button>
@@ -80,24 +82,34 @@ $(document).ready(function() {
 	
 	$('button').on("click", function(e){
 		
-		e.preventDefault(); //기본이벤트 삭제
+		e.preventDefault();
 		
-		var operation = $(this).data("oper");
+		var operation = $(this).data("oper"); //클릭한 버튼
 		
-		console.log(operation);
+		console.log("수정페이지에서 선택: " +operation);
 		
-		if(operation === 'remove'){ //삭제버튼 클릭 시
+		 //삭제버튼 클릭 시
+		if(operation === 'remove'){
+			alert("게시글이 삭제되었습니다.");
 			formObj.attr("action", "/post/delete");
 		}
-		else if(operation === 'list'){ //목록버튼 클릭 시
+		
+		 //목록으로 돌아가기
+		else if(operation === 'list'){
 			formObj.attr("action", "/post/list").attr("method", "get");
 		
 			var pageNum = $("input[name='pageNum']").clone();
 			var amountTag = $("input[name='amount']").clone();
 			
-			formObj.empty(); //기존 form내용 삭제시킨 후 list 이동(페이지정보만전달)
+			//기존 form내용 삭제시킨 후 list 이동, board_num 전달
+			formObj.empty(); 
 			formObj.append(pageNum);
 			formObj.append(amountTag);
+			formObj.append("<input type='hidden' name='board_num' value='"+${post.board_num}+"'>");
+		}
+	
+		else if(operation === 'modify'){
+			alert("게시글이 수정되었습니다.");
 		}
 		formObj.submit();
 		

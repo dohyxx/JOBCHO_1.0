@@ -45,12 +45,13 @@
 								</a>
 							</td>
 
-							<td>권도현</td>
+							<td><c:out value="${postList.board_num}"/></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${postList.post_date}"/></td>
 						</tr>
 					</c:forEach>
 				</table>
+				
 				
 				<!--------------- 검색 처리 ----------------->
 				<%-- <div class='row'>
@@ -139,7 +140,7 @@
 								<form id='actionForm' action="/post/list" method='get'>
 										<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 										<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-										<input type='hidden' name='board_num' value='${board_num}'>
+										<input type='hidden' name='board_num' value='<c:out value="${board_num}"/>'>
 
 										<%-- <input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
 										<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'> --%>
@@ -194,6 +195,7 @@ $(document).ready(function(){
 		
 		self.location = "/post/register";
 	});
+	
 
 	//페이지 번호 이벤트 적용
 	$(".paginate_button a").on("click", function(e){
@@ -213,8 +215,11 @@ $(document).ready(function(){
 		
 		//post_num을 form태그에 담아서 전달
 		actionForm.append("<input type='hidden' name='post_num' value='"+$(this).attr("href")+"'>");
+		
 		actionForm.attr("action", "/post/get");
 		actionForm.submit();
+		
+		console.log("리스트에서 상세조회로 전달: ");
 	});
 
 

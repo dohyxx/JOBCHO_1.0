@@ -50,7 +50,7 @@ public class BoardController {
 	public ResponseEntity<List<BoardVO>> getListBoard(){
 		
 		List<BoardVO> board = service.getListBoard();
-		System.out.println("board: " + board);
+		System.out.println("게시판 리스트 조회");
 		return new ResponseEntity<>(board, HttpStatus.OK);
 	}
 	

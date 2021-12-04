@@ -40,7 +40,7 @@ public class PostController {
 		
 		log.info("게시글 리스트");
 		log.info("전체 글 수: " + total);
-		System.out.println("게시글 리스트!!" + board_num);
+		System.out.println("게시글 리스트 호출: " + board_num);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("board_num", board_num);
@@ -54,12 +54,13 @@ public class PostController {
 	
 	//게시글 상세조회
 	@GetMapping({"/get", "/update"})
-	public void getPost(@RequestParam("post_num") int post_num, 
+	public void getPost(@RequestParam("post_num") int post_num,
 								    @ModelAttribute("cri") Criteria cri, Model model) { //상세화면에서 목록으로 갈때 페이지처리
-		
-		log.info("게시글 상세조회: " + post_num);
+
+		System.out.println("상세조회 호출!!: ");
 		
 		model.addAttribute("post", service.getPost(post_num));
+		
 	}
 	
 	
@@ -97,6 +98,8 @@ public class PostController {
 		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("board_num", post.getBoard_num());
+		
 		
 		return "redirect:/post/list";
 	}
@@ -105,7 +108,8 @@ public class PostController {
 	
 	//게시글 삭제
 	@PostMapping("/delete")
-	public String deletePost(@RequestParam("post_num") int post_num, 
+	public String deletePost(@RequestParam("post_num") int post_num,
+											@RequestParam("board_num") int board_num,
 											@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		
 		service.deletePost(post_num);
@@ -113,6 +117,7 @@ public class PostController {
 		log.info("삭제 완료! " + post_num);
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("board_num", board_num);
 		
 		return "redirect:/post/list";
 	}

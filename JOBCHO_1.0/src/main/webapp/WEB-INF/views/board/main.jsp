@@ -295,7 +295,7 @@
         </div>
     </div> 
     
-    
+    	<!-- board_num 계속 유지시키기 -->
     	<form id='actionForm' action="/post/list" method='get'>
 				<input type='hidden' name='board_num' value='${pageMaker.cri.pageNum}'>
 		</form>
