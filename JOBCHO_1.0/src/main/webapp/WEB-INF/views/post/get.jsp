@@ -45,8 +45,66 @@
 		
 <button data-oper='modify' class="btn btn-info">수정</button>
 <button data-oper='list' class="btn btn-default">목록</button>
+<br><br><br><br>
 
 
+<!-- ==========댓글========= -->
+<div class='row'>
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      
+      <!-- 댓글 등록 -->
+      <div class="panel-heading">
+        <i class="fa fa-comments fa-fw"></i> 댓글
+        <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
+      </div>      
+      
+      <div class="panel-body">
+      	<!--댓글 보여지는 부분 -->
+        <ul class="chat">
+
+        </ul>
+        
+      </div>
+	<div class="panel-footer"></div>
+	</div>
+  </div>
+</div>
+
+<!-- 댓글 Modal -->
+      <div class="modal fade" id="replyModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">댓글 작성</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>댓글 내용</label> 
+                <input class="form-control" name='reply_contents' value='reply'>
+              </div>      
+              <div class="form-group">
+                <label>작성자</label> 
+                <input class="form-control" name='replyer' value='replyer'>
+              </div>
+              <div class="form-group">
+                <label>Reply Date</label> 
+                <input class="form-control" name='replyDate' value='2018-01-01 13:13'>
+              </div>
+            </div>
+            
+			<div class="modal-footer">
+        		<button id='reply' type="button" class="btn btn-warning">Modify</button>
+        		<button id='replyRemoveBtn' type="button" class="btn btn-danger">Remove</button>
+        		<button id='replyRegisterBtn' type="button" class="btn btn-primary">Register</button>
+        		<button id='replyCloseBtn' type="button" class="btn btn-default">Close</button>
+      		</div>
+		</div>
+	</div>
+</div>
 
 			<!----------- form으로 데이터 유지 ----------->
 			<form id='operForm' action="/post/update" method="get">
@@ -54,8 +112,8 @@
  				<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
   				<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
   				<input type='hidden' name='board_num' value='<c:out value="${post.board_num}"/>'>
-  				<%--<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
-  				<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>    --%>
+  				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+  				<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'> 
 			</form>
 
 
@@ -69,6 +127,7 @@
   <!-- end panel -->
 </div>
 <!-- /.row -->
+<script type="text/javascript" src="/resources/js/reply.js?version=20211204"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -89,7 +148,81 @@ $(document).ready(function() {
     operForm.attr("action","/post/list")
     operForm.submit();
   });  
-});
+    
+
+});//end d.ready
 </script>
 
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+//==========댓글 Modal==========
+
+var replyUL =$(".chat");
+
+var replyModal = $("#replyModal");
+var modalInputReply = replyModal.find("input[name='reply_contents']");
+var modalInputReplyer = replyModal.find("input[name='replyer']");
+var modalInputReplyDate = replyModal.find("input[name='replyDate']");
+
+var replyModBtn = $("#replyModBtn"); //수정버튼
+var replyRemoveBtn = $("#replyRemoveBtn");//삭제버튼
+var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
+
+//댓글 모달 닫기 버튼
+$("#replyCloseBtn").on("click", function(e){
+
+	replyModal.modal('hide');	
+});
+
+//댓글 등록 버튼 클릭 시 모달 show
+$("#addReplyBtn").on("click", function(e){
+	
+	console.log("댓글 생성 모달창");
+	replyModal.find("input").val("");
+	modalInputReplyDate.closest("div").hide();
+	replyModal.find("button[id !='replyCloseBtn']").hide();
+	
+	replyRegisterBtn.show();
+	
+	replyModal.modal("show");
+});
+
+
+//댓글 입력한 데이터 등록
+replyRegisterBtn.on("click", function(e){
+	
+	console.log("댓글 등록");
+	var reply = {
+			reply_contents: modalInputReply.val(),
+			member_num: 1,
+			post_num: ${post.post_num}
+	};
+	
+	replyService.insertReply(reply, function(result){ 
+		
+		alert("댓글이 등록되었습니다.");
+		replyModal.find("input").val("");
+		replyModal.modal("hide");
+		
+		});
+	
+	}); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+});//end d.ready
+</script>
 

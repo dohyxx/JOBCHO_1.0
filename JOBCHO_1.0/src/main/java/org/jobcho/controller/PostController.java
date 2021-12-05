@@ -41,6 +41,7 @@ public class PostController {
 		log.info("게시글 리스트");
 		log.info("전체 글 수: " + total);
 		System.out.println("게시글 리스트 호출: " + board_num);
+		System.out.println("키워드: " + cri.getKeyword());
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("board_num", board_num);
@@ -57,7 +58,7 @@ public class PostController {
 	public void getPost(@RequestParam("post_num") int post_num,
 								    @ModelAttribute("cri") Criteria cri, Model model) { //상세화면에서 목록으로 갈때 페이지처리
 
-		System.out.println("상세조회 호출!!: ");
+		System.out.println("상세조회 호출!!: " + post_num);
 		
 		model.addAttribute("post", service.getPost(post_num));
 		
@@ -102,7 +103,8 @@ public class PostController {
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("board_num", post.getBoard_num());
-		
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
 		
 		return "redirect:/post/list";
 	}
@@ -121,6 +123,8 @@ public class PostController {
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("board_num", board_num);
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
 		
 		return "redirect:/post/list";
 	}

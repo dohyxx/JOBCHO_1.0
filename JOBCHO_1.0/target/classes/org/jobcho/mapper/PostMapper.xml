@@ -21,11 +21,30 @@
 					select /*+INDEX_DESC(post SYS_C007525) */
 						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date, islive
 					from post
-					where 
-					rownum <= #{cri.pageNum} * #{cri.amount}
-					and board_num = #{board_num}
-					and islive = 1
-					
+					where
+		]]>	
+				<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+					<foreach item='type' collection="#{cri.typeArr}">
+					<trim prefix="OR">
+					<choose>
+						<when test="type == #{cri.type}">
+							post_title like '%'||#{cri.keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							post_contents like '%'||#{cri.keyword}||'%'
+						</when>
+						 <when test="type == 'W'.toString()">
+							post_contents like '%'||#{cri.keyword}||'%'
+						</when>
+					</choose>
+					</trim>
+					</foreach>
+				</trim>
+				
+		<![CDATA[
+				rownum <= #{cri.pageNum} * #{cri.amount}
+				and board_num = #{board_num}
+				and islive = 1 		 
 				)
 				where rn > (#{cri.pageNum} -1) * #{cri.amount}
 				and board_num = #{board_num}

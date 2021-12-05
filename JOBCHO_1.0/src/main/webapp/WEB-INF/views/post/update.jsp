@@ -27,8 +27,8 @@
 						<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> 
 						<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
 						<input type='hidden' name='board_num' value='<c:out value="${post.board_num}"/>'> 
-						<%-- <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
-						<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'> --%>
+						<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
+						<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
 
 					<div class="form-group">
 						<label>글 번호</label> <input class="form-control" name='post_num'
@@ -106,6 +106,8 @@ $(document).ready(function() {
 			formObj.append(pageNum);
 			formObj.append(amountTag);
 			formObj.append("<input type='hidden' name='board_num' value='"+${post.board_num}+"'>");
+			formObj.append("<input type='hidden' name='type' value='"+${cri.type}+"'>");
+			formObj.append("<input type='hidden' name='keyword' value='"+${cri.keyword}+"'>");
 		}
 	
 		else if(operation === 'modify'){

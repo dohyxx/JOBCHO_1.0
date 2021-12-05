@@ -54,10 +54,10 @@
 				
 				
 				<!--------------- 검색 처리 ----------------->
-				<%-- <div class='row'>
+				<div class='row'>
 					<div class="col-sm-7">
 
-						<form id='searchForm' action="/board/list" method='get'>
+						<form id='searchForm' action="/post/list" method='get'>
 							<select name='type'>
 								<option value=""
 									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
@@ -69,21 +69,22 @@
 									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
 								<option value="TC"
 									<c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목
-									or 내용</option>
+									+ 내용</option>
 								<option value="TW"
 									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목
-									or 작성자</option>
+									+ 작성자</option>
 								<option value="TWC"
 									<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목
-									or 내용 or 작성자</option>
+									+ 내용 + 작성자</option>
 							</select> 
 							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' /> 
 							<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
 							<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' />
-							<button class='btn btn-default'>Search</button>
+							<input type='hidden' name='board_num' value='<c:out value="${board_num}"/>' />
+							<button class='btn btn-default'>검색</button>
 						</form>
 					</div>
-				</div> --%>
+				</div> 
 
 				<!---------------- 페이지 처리 ----------------->
 				<div class='pull-right'>
@@ -224,15 +225,44 @@ $(document).ready(function(){
 		actionForm.empty();
 		actionForm.append("<input type='hidden' name='board_num' value='"+${board_num}+"'>");
 		actionForm.append("<input type='hidden' name='pageNum' value='"+ $(this).attr("href")+ "'>"); //href의 num값을 form에 넣는다.
+		actionForm.append("<input type='hidden' name='type' value='"+ ${pageMaker.cri.type}+ "'>");
+		actionForm.append("<input type='hidden' name='keyword' value='"+ ${pageMaker.cri.keyword}+ "'>");
 		
 		actionForm.submit();
 	}); //end pageinate 
 	
+
+	//=======검색 버튼 이벤트 처리
+	/* var searchForm = $("#searchForm");
 	
-	
+	$("#searchForm button").on("click", function(e){
+		
+		alert("키워드를 입력하세요");
+		
+		//검색종류 선택안하고 검색버튼 클릭 시
+		if(!searchForm.find("option:selected").val()){  
+			alert("검색 종류를 선택하세요");
+			return false;
+		}
+		
+		//키워드 입력안하고 검색버튼 클릭 시
+		if(!searchForm.find("input[name='keyword']").val()){
+			alert("키워드를 입력하세요");
+			return false;
+		}
+		
+		//검색결과는 항상 1페이지부터
+		searchForm.find("input[name='pageNum']").val("1")); 
+		e.preventDefault();
+		
+		searchForm.submit();	
+	}); */
 	
 	
 	
 }); //end d.ready
+	
+	
+
 </script>
 

@@ -83,8 +83,8 @@
                     <div>
                         <div class="nav-profile-image-left"></div>
                         <div class="nav-profile-content-left">
-                            <p>cjhun0516@gmail.com</p>
-                            <p>2팀 팀장</p>
+                            <p>dohyun1225@gmail.com</p>
+                            <p>권도현</p>
                         </div>
                     </div>
                     <!--프로필 끝-->
@@ -266,7 +266,7 @@
 <!-- 컨텐츠 끝-->
 
     <!--팀원초대 modal -->
-       <div class="row">
+     <div class="row">
         <div class="modal" id="teamModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -294,7 +294,7 @@
             </div>
         </div>
     </div> 
-    
+
     	<!-- board_num 계속 유지시키기 -->
     	<form id='actionForm' action="/post/list" method='get'>
 				<input type='hidden' name='board_num' value='${pageMaker.cri.pageNum}'>
@@ -304,7 +304,7 @@
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
     <script src="/resources/post_and_board/sidebar-right.js"></script>
     <script src="/resources/post_and_board/sidebar-left.js"></script>
-	<script type="text/javascript" src="/resources/js/board.js?version=20211203"></script>
+	<script type="text/javascript" src="/resources/js/board.js?version=20211205"></script>
 
 
 <script>
@@ -324,10 +324,11 @@ $(document).ready(function(){
 			var str ="";
 			
 			for(var i = 0; i < board.length; i++){
-                str +="<a href='"+board[i].board_num+"' class='nav__link-left'>";
+                str +="<a href='"+board[i].board_num+"' class='nav__link-left'>"; //board_num 전달
                 str +="<ion-icon name='home-outline' class='nav__icon-left'></ion-icon>";
-				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>";
+				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>"; //게시판이름 출력
 				str +="</a>"; 
+				
 			}
 			boardUL.html(str); //html 추가
 		});
