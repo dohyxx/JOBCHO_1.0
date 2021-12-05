@@ -50,11 +50,13 @@ public class ReplyController {
 	
 	
 	//댓글 리스트 불러오기
-	@GetMapping(value = "",
-							produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@GetMapping(value = "/{post_num}",
+							produces = { MediaType.TEXT_XML_VALUE,
+												 MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<ReplyVO>> getListReply(@PathVariable("post_num") int post_num){
 		
 		log.info("댓글 목록: " + post_num);
+		System.out.println("댓글리스트불러오기: " +post_num);
 		
 		return new ResponseEntity<>(service.getListReply(post_num), HttpStatus.OK);
 	}

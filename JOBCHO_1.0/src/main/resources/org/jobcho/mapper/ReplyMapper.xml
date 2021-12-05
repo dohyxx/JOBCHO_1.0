@@ -9,9 +9,11 @@
 	
 	
 	<!-- 댓글 목록 -->
-	<select id="getListReply" resultType="org.jobcho.domain.ReplyVO">
+	<select id="getListReply" parameterType="int" resultType="org.jobcho.domain.ReplyVO">
 		<![CDATA[ 
 			select * from reply
+			where post_num = #{post_num}
+			and islive = 1
 		]]>
 	</select>
 	

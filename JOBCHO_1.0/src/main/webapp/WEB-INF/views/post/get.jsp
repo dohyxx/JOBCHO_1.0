@@ -45,24 +45,55 @@
 		
 <button data-oper='modify' class="btn btn-info">수정</button>
 <button data-oper='list' class="btn btn-default">목록</button>
-<br><br><br><br>
+<br><br>
+<br><br>
+
+<style>
+.chat {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.chat li {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #999999;
+}
+.chat li.left .chat-body {
+  margin-left: 60px;
+}
+.chat li.right .chat-body {
+  margin-right: 60px;
+}
+.chat li .chat-body p {
+  margin: 0;
+}
+.panel .slidedown .glyphicon,
+.chat .glyphicon {
+  margin-right: 5px;
+}
+.chat-panel .panel-body {
+  height: 350px;
+  overflow-y: scroll;
+}
+</style>
 
 
 <!-- ==========댓글========= -->
 <div class='row'>
   <div class="col-lg-12">
     <div class="panel panel-default">
-      
+    
       <!-- 댓글 등록 -->
       <div class="panel-heading">
         <i class="fa fa-comments fa-fw"></i> 댓글
-        <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
+        <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>댓글 쓰기</button>
       </div>      
       
       <div class="panel-body">
       	<!--댓글 보여지는 부분 -->
-        <ul class="chat">
-
+        <ul class="chat" style=list-style:none>
+			
         </ul>
         
       </div>
@@ -70,6 +101,7 @@
 	</div>
   </div>
 </div>
+
 
 <!-- 댓글 Modal -->
       <div class="modal fade" id="replyModal" tabindex="-1" role="dialog"
@@ -97,10 +129,10 @@
             </div>
             
 			<div class="modal-footer">
-        		<button id='reply' type="button" class="btn btn-warning">Modify</button>
-        		<button id='replyRemoveBtn' type="button" class="btn btn-danger">Remove</button>
-        		<button id='replyRegisterBtn' type="button" class="btn btn-primary">Register</button>
-        		<button id='replyCloseBtn' type="button" class="btn btn-default">Close</button>
+        		<button id='reply' type="button" class="btn btn-warning">수정</button>
+        		<button id='replyRemoveBtn' type="button" class="btn btn-danger">삭제</button>
+        		<button id='replyRegisterBtn' type="button" class="btn btn-primary">등록</button>
+        		<button id='replyCloseBtn' type="button" class="btn btn-default">닫기</button>
       		</div>
 		</div>
 	</div>
@@ -127,7 +159,7 @@
   <!-- end panel -->
 </div>
 <!-- /.row -->
-<script type="text/javascript" src="/resources/js/reply.js?version=20211204"></script>
+<script type="text/javascript" src="/resources/js/reply.js?version=20211205"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -149,7 +181,6 @@ $(document).ready(function() {
     operForm.submit();
   });  
     
-
 });//end d.ready
 </script>
 
@@ -159,7 +190,7 @@ $(document).ready(function() {
 $(document).ready(function() {
 	
 //==========댓글 Modal==========
-
+var postUL = '<c:out value="${post.post_num }"/>';
 var replyUL =$(".chat");
 
 var replyModal = $("#replyModal");
@@ -171,11 +202,46 @@ var replyModBtn = $("#replyModBtn"); //수정버튼
 var replyRemoveBtn = $("#replyRemoveBtn");//삭제버튼
 var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 
+
+//==========댓글 리스트 호출==========
+	getListReply(); 
+
+	function getListReply(){
+	
+		console.log("댓글리스트 호출: " +postUL);
+
+		replyService.getListReply({pno:postUL}, function(list){
+			console.log("댓글리스트 1");
+			var str ="";
+	
+			//댓글이 없을 경우
+			if(list == null || list.length == 0){
+				replyUL.html("");
+				return;
+			}
+	
+			for (var i = 0, len = list.length || 0; i < len; i++) {
+		           str +="<li class='left clearfix' data-reply_num='"+list[i].reply_num+"'>";
+		           str +="  <div><div class='header'><strong class='primary-font'>"+list[i].reply_contents+"</strong>"; 
+		           str +="    <small class='pull-right text-muted'>"+list[i].reply_date+"</small></div>";
+		           str +="    <p>"+list[i].reply_contents+"</p></div></li>";
+		         }
+			
+			replyUL.html(str);
+		
+		});
+		
+	}//end getListReply
+
+
+
+
 //댓글 모달 닫기 버튼
 $("#replyCloseBtn").on("click", function(e){
 
 	replyModal.modal('hide');	
 });
+
 
 //댓글 등록 버튼 클릭 시 모달 show
 $("#addReplyBtn").on("click", function(e){
@@ -201,19 +267,15 @@ replyRegisterBtn.on("click", function(e){
 			post_num: ${post.post_num}
 	};
 	
-	replyService.insertReply(reply, function(result){ 
+	replyService.insertReply(reply, function(result){ //
 		
 		alert("댓글이 등록되었습니다.");
 		replyModal.find("input").val("");
 		replyModal.modal("hide");
-		
+		getListReply(); 
 		});
-	
 	}); 
-
-
-
-
+	
 
 
 
@@ -224,5 +286,6 @@ replyRegisterBtn.on("click", function(e){
 
 
 });//end d.ready
+
 </script>
 

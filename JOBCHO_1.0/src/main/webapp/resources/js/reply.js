@@ -1,4 +1,4 @@
-console.log("reply.js 실행");
+
 
 var replyService = (function() {
 
@@ -25,6 +25,24 @@ var replyService = (function() {
 	}
 
 	
+	//댓글 리스트 불러오기
+	function getListReply(param, callback, error) {
+
+	    var post_num = param.pno;
+	    
+	    $.getJSON("/reply/" + post_num +".json",
+	        function(data) {
+	    	
+	          if (callback) {
+	            callback(data); // 댓글 목록만 가져오는 경우 
+	          }
+	        }).fail(function(xhr, status, err) {
+	      if (error) {
+	        error();
+	      }
+	    });
+	  }
+		
 	
 	
 	
@@ -32,8 +50,8 @@ var replyService = (function() {
 	
 	
 	return {  //객체로 리턴 (변수에 함수를 넣음)
-		insertReply : insertReply
-		
+		insertReply : insertReply,
+		getListReply : getListReply
 	};
 
 })(); //end ReplyService
