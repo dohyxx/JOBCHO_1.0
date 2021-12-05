@@ -118,6 +118,7 @@ public class PostController {
 											@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		
 		service.deletePost(post_num);
+		System.out.println("컨트롤러 삭제완료");
 		
 		log.info("삭제 완료! " + post_num);
 		rttr.addAttribute("pageNum", cri.getPageNum());

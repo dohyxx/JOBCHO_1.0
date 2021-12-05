@@ -13,4 +13,6 @@ public interface ReplyService {
 	public int updateReply(ReplyVO reply);
 	
 	public void deleteReply(int reply_num);
+	
+	public ReplyVO getReply(int reply_num);
 }

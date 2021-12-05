@@ -68,4 +68,15 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	
+	/*
+	 * 특정 댓글 가져오기
+	 * 
+	 */
+	@Override
+	public ReplyVO getReply(int reply_num) {
+		
+		return mapper.getReply(reply_num); 
+	}
+
+	
 }

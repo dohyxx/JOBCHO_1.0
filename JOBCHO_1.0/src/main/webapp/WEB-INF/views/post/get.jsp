@@ -92,7 +92,7 @@
       
       <div class="panel-body">
       	<!--댓글 보여지는 부분 -->
-        <ul class="chat" style=list-style:none>
+        <ul class="chat">
 			
         </ul>
         
@@ -129,7 +129,7 @@
             </div>
             
 			<div class="modal-footer">
-        		<button id='reply' type="button" class="btn btn-warning">수정</button>
+        		<button id='replyModBtn' type="button" class="btn btn-info">수정</button>
         		<button id='replyRemoveBtn' type="button" class="btn btn-danger">삭제</button>
         		<button id='replyRegisterBtn' type="button" class="btn btn-primary">등록</button>
         		<button id='replyCloseBtn' type="button" class="btn btn-default">닫기</button>
@@ -159,7 +159,7 @@
   <!-- end panel -->
 </div>
 <!-- /.row -->
-<script type="text/javascript" src="/resources/js/reply.js?version=20211205"></script>
+<script type="text/javascript" src="/resources/js/reply.js?version=20211206"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -176,7 +176,7 @@ $(document).ready(function() {
     //목록버튼 클릭 시
   $("button[data-oper='list']").on("click", function(e){
     
-    operForm.find("#post_num").remove(); //목록으로 이동할땐 번호를 지운다.
+    operForm.find("#post_num").remove(); //목록으로 이동할땐 게시글 번호를 지운다.
     operForm.attr("action","/post/list")
     operForm.submit();
   });  
@@ -210,8 +210,8 @@ var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 	
 		console.log("댓글리스트 호출: " +postUL);
 
-		replyService.getListReply({pno:postUL}, function(list){
-			console.log("댓글리스트 1");
+		replyService.getListReply({pno:postUL}, function(list){ //reply.js 호출
+			
 			var str ="";
 	
 			//댓글이 없을 경우
@@ -223,7 +223,7 @@ var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 			for (var i = 0, len = list.length || 0; i < len; i++) {
 		           str +="<li class='left clearfix' data-reply_num='"+list[i].reply_num+"'>";
 		           str +="  <div><div class='header'><strong class='primary-font'>"+list[i].reply_contents+"</strong>"; 
-		           str +="    <small class='pull-right text-muted'>"+list[i].reply_date+"</small></div>";
+		           str +="    <small class='pull-right text-muted'>"+replyService.replyTime(list[i].reply_date)+"</small></div>";
 		           str +="    <p>"+list[i].reply_contents+"</p></div></li>";
 		         }
 			
@@ -267,17 +267,51 @@ replyRegisterBtn.on("click", function(e){
 			post_num: ${post.post_num}
 	};
 	
-	replyService.insertReply(reply, function(result){ //
+	replyService.insertReply(reply, function(result){ //reply.js 호출
 		
 		alert("댓글이 등록되었습니다.");
-		replyModal.find("input").val("");
+		replyModal.find("input").val(""); //입력항목 비움
 		replyModal.modal("hide");
-		getListReply(); 
+		getListReply(); //댓글등록 후 목록 갱신 
 		});
 	}); 
 	
 
-
+	//동적으로 생성된 댓글 이벤트 위임, 특정댓글 보기
+	$(".chat").on("click", "li", function(){
+		
+		var reply_num = $(this).data("reply_num");
+		
+		replyService.getReply(reply_num, function(reply){ //reply.js 호출
+			
+			modalInputReply.val(reply.reply_contents);
+			modalInputReplyer.val(reply.member_num);
+			modalInputReplyDate.val(replyService.replyTime(reply.reply_date)).attr("readonly", "readonly");
+			replyModal.data("reply_num", reply.reply_num);
+			
+			replyModal.find("button[id != 'replyCloseBtn']").hide();
+			
+			replyModBtn.show(); //수정버튼 활성화 
+			replyRemoveBtn.show();//삭제버튼 활성화
+			
+			replyModal.modal("show");
+		});
+	});
+	
+	
+	//특정 댓글 수정
+	replyModBtn.on("click", function(){
+		
+		var reply = {reply_num: replyModal.data("reply_num"), reply_contents: modalInputReply.val() };
+		console.log("댓글 수정내용: "+modalInputReply.val());
+		
+		replyService.updateReply(reply, function(result){//reply.js 호출
+		 	
+			alert("댓글이 수정되었습니다.");
+			replyModal.modal("hide");
+			getListReply(); //댓글 수정 후 댓글목록 갱신
+		});
+	});
 
 
 

@@ -106,8 +106,8 @@ $(document).ready(function() {
 			formObj.append(pageNum);
 			formObj.append(amountTag);
 			formObj.append("<input type='hidden' name='board_num' value='"+${post.board_num}+"'>");
-			formObj.append("<input type='hidden' name='type' value='"+${cri.type}+"'>");
-			formObj.append("<input type='hidden' name='keyword' value='"+${cri.keyword}+"'>");
+			/* formObj.append("<input type='hidden' name='type' value='"+${cri.type}+"'>");
+			formObj.append("<input type='hidden' name='keyword' value='"+${cri.keyword}+"'>"); */
 		}
 	
 		else if(operation === 'modify'){
@@ -124,12 +124,6 @@ $(document).ready(function() {
 
 
 
-<script>
-$(document).ready(function() {
-  (function(){
-    
-    
-</script>
 
 
 

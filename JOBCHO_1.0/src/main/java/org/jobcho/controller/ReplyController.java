@@ -40,9 +40,9 @@ public class ReplyController {
 																				){
 		
 		log.info("댓글 등록: " + reply);
-		int r_insertCount = service.insertReply(reply);
+		int insertCount = service.insertReply(reply);
 		
-		return r_insertCount == 1
+		return insertCount == 1
 				? new ResponseEntity<>(HttpStatus.OK)
 				:  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -50,25 +50,36 @@ public class ReplyController {
 	
 	
 	//댓글 리스트 불러오기
-	@GetMapping(value = "/{post_num}",
+	@GetMapping(value = "/post/{post_num}",
 							produces = { MediaType.TEXT_XML_VALUE,
 												 MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<ReplyVO>> getListReply(@PathVariable("post_num") int post_num){
 		
 		log.info("댓글 목록: " + post_num);
-		System.out.println("댓글리스트불러오기: " +post_num);
 		
 		return new ResponseEntity<>(service.getListReply(post_num), HttpStatus.OK);
 	}
 	
 	
+	//특정 댓글 조회
+		@GetMapping("/{reply_num}")
+		public ResponseEntity<ReplyVO> get(@PathVariable("reply_num") int reply_num) {
+			
+			log.info("특정 댓글 조회: " +reply_num);
+			
+			return new ResponseEntity<>(service.getReply(reply_num), HttpStatus.OK);
+		}
 	
 	
 	//댓글 수정
-	@PutMapping(value = "/{reply_num}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(method = { RequestMethod.PUT, RequestMethod.PATCH},
+									value = "/{reply_num}", consumes = "application/json",
+									produces = { MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<ReplyVO> updateReply(@PathVariable("reply_num") int reply_num,
 																				@RequestBody ReplyVO reply){
 		log.info("댓글 수정: " + reply_num);
+		System.out.println("댓글 수정 번호: " +reply_num);
+		System.out.println("댓글 수정 내용: " +reply.getReply_contents());
 		
 		reply.setReply_num(reply_num);
 		int updateCount = service.updateReply(reply);
