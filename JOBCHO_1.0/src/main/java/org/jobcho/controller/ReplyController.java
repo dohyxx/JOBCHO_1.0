@@ -72,13 +72,10 @@ public class ReplyController {
 	
 	
 	//댓글 수정
-	@RequestMapping(method = { RequestMethod.PUT, RequestMethod.PATCH},
-									value = "/{reply_num}", consumes = "application/json",
-									produces = { MediaType.TEXT_PLAIN_VALUE})
+	@PutMapping(value = "/{reply_num}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ReplyVO> updateReply(@PathVariable("reply_num") int reply_num,
 																				@RequestBody ReplyVO reply){
 		log.info("댓글 수정: " + reply_num);
-		System.out.println("댓글 수정 번호: " +reply_num);
 		System.out.println("댓글 수정 내용: " +reply.getReply_contents());
 		
 		reply.setReply_num(reply_num);
@@ -92,11 +89,11 @@ public class ReplyController {
 	
 	
 	//댓글 삭제
-	@DeleteMapping(value = "/{reply_num}",
-			produces = {MediaType.TEXT_PLAIN_VALUE})
+	@DeleteMapping(value = "/{reply_num}", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> deleteReply(@PathVariable int reply_num){
 		
 		log.info("댓글 삭제: " + reply_num);
+		System.out.println("댓글 삭제 번호: " +reply_num);
 		service.deleteReply(reply_num);
 		
 		return new ResponseEntity<>("success", HttpStatus.OK);

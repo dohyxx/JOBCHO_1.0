@@ -313,7 +313,20 @@ replyRegisterBtn.on("click", function(e){
 		});
 	});
 
-
+	
+	//댓글 삭제 
+   	replyRemoveBtn.on("click", function (e){
+   	  
+   	  var reply_num = replyModal.data("reply_num");
+   	  
+   	  replyService.deleteReply(reply_num, function(result){
+   	        
+   	    alert("댓글이 삭제되었습니다.");
+   	   	replyModal.modal("hide");
+   		getListReply(); //댓글 삭제 후 댓글목록 갱신
+   	  });
+   	  
+   	});
 
 
 

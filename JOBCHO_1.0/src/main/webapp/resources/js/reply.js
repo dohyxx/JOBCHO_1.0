@@ -85,7 +85,23 @@ var replyService = (function() {
 	
 	
 	//댓글 삭제
-	
+	function deleteReply(reply_num, callback, error) {
+		
+		$.ajax({
+			type : 'delete',
+			url : '/reply/' + reply_num,
+			success : function(deleteResult, status, xhr) {
+				if (callback) {
+					callback(deleteResult);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		});
+	}
 	
 		
 	
@@ -125,7 +141,8 @@ var replyService = (function() {
 		getListReply : getListReply,
 		replyTime : replyTime,
 		getReply : getReply,
-		updateReply : updateReply
+		updateReply : updateReply,
+		deleteReply : deleteReply
 	};
 
 })(); //end ReplyService
