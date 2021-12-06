@@ -19,7 +19,7 @@
 				select *
 				from(
 					select /*+INDEX_DESC(post SYS_C007525) */
-						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date, islive
+						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date, islive, replycnt
 					from post
 					where
 		]]>	
@@ -84,6 +84,13 @@
 		where board_num = #{board_num}
 		and islive = 1
 	</select>
+	
+	
+	<!--  댓글 수 업데이트 -->
+	<update id="updateReplyCnt">
+		update post set replycnt = replycnt + #{amount}
+		where post_num = #{post_num}
+	</update>
 	
 	
 

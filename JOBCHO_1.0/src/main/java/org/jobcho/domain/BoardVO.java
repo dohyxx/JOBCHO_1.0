@@ -19,6 +19,6 @@ public class BoardVO implements Serializable {
 	private int isLive; // delete 여부
 	private Date board_date;
 	
-	private MemberVO member;
-	private TeamVO team;
+	
+	
 }

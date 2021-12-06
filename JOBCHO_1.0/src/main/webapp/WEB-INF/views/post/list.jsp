@@ -42,6 +42,7 @@
 							<td>
 								<a class='move' href='<c:out value="${postList.post_num}"/>'> <!--move 클래스 추가 -->
 								<c:out value="${postList.post_title}"/><!-- 제목 클릭 시 move이벤트 발생 -->
+								<b>[<c:out value="${postList.replycnt }"/>]</b>
 								</a>
 							</td>
 

@@ -270,8 +270,8 @@ replyRegisterBtn.on("click", function(e){
 	replyService.insertReply(reply, function(result){ //reply.js 호출
 		
 		alert("댓글이 등록되었습니다.");
-		replyModal.find("input").val(""); //입력항목 비움
-		replyModal.modal("hide");
+		replyModal.find("input").val(""); //입력항목 비우고 
+		replyModal.modal("hide");	//모달창 닫기
 		getListReply(); //댓글등록 후 목록 갱신 
 		});
 	}); 
