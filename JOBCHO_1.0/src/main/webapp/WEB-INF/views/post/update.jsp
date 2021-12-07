@@ -2,12 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@include file="/WEB-INF/views/board/main.jsp"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@include file="/WEB-INF/views/main.jsp"%>
 
 
 <div class="row" style="margin-top: 80px">
 	<div class="col-sm-7" style="margin-left: 450px">
-		<h2 class="page-header">게시글 수정</h2>
+		<h2 class="page-header">${board.board_name }</h2>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -23,13 +24,7 @@
 				
 				<!-- form을 이용해서 데이터 유지 + 수정 정보 전달 -->
 				<form role="form" action="/post/update" method="post">
-
-						<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> 
-						<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
-						<input type='hidden' name='board_num' value='<c:out value="${post.board_num}"/>'> 
-						<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
-						<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
-
+				
 					<div class="form-group">
 						<label>글 번호</label> <input class="form-control" name='post_num'
 							value='<c:out value="${post.post_num }"/>' readonly="readonly">
@@ -48,7 +43,7 @@
 
 					<div class="form-group">
 						<label>작성자</label> <input class="form-control" name='writer'
-							value='<c:out value="${post.board_num}"/>' readonly="readonly">
+							value=<sec:authentication property="principal.users.user_name"/>  readonly="readonly">
 					</div>
 
 					<div class="form-group">
@@ -56,6 +51,14 @@
 							value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${post.post_date}" />'
 							readonly="readonly">
 					</div>
+					
+					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> 
+						<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+						<input type='hidden' name='board_num' value='<c:out value="${post.board_num}"/>'> 
+						<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
+						<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
+						<input type='hidden' name='team_num' value='<c:out value="${team_num}"/>'>
+  						<input type='hidden' name='member_num' value='<c:out value="${member_num}"/>'>
 					
 
 					<!-- 전송버튼 -->
@@ -90,6 +93,12 @@ $(document).ready(function() {
 		
 		 //삭제버튼 클릭 시
 		if(operation === 'remove'){
+			
+			if(!confirm("정말로 삭제하시겠습니까?")){
+	   			alert("취소되었습니다.")
+	   			replyModal.modal("hide");
+	   		}
+			
 			alert("게시글이 삭제되었습니다.");
 			formObj.attr("action", "/post/delete");
 		}
@@ -106,6 +115,9 @@ $(document).ready(function() {
 			formObj.append(pageNum);
 			formObj.append(amountTag);
 			formObj.append("<input type='hidden' name='board_num' value='"+${post.board_num}+"'>");
+			formObj.append("<input type='hidden' name='team_num' value='"+${team_num}+"'>");
+			formObj.append("<input type='hidden' name='member_num' value='"+${member_num}+"'>");
+
 			/* formObj.append("<input type='hidden' name='type' value='"+${cri.type}+"'>");
 			formObj.append("<input type='hidden' name='keyword' value='"+${cri.keyword}+"'>"); */
 		}

@@ -7,10 +7,11 @@
 	
 	
 	<!-- 게시판 목록 가져오기 -->
-	<select id="getListBoard" resultType="org.jobcho.domain.BoardVO">
+	<select id="getListBoard" parameterType="int" resultType="org.jobcho.domain.BoardVO">
 		<![CDATA[ 
 			select  /*+INDEX_ASC(board SYS_C007522) */ * from board
-			where islive = 1
+			where team_num = #{team_num} 
+			and islive = 1
 		]]>
 	</select>
 	
@@ -32,9 +33,10 @@
 	</update>
 	
 	
-	<select id="deleteBoard" parameterType="int">
-		DELETE FROM board WHERE board_num = #{board_num}
-	</select> 
+	<delete id="deleteBoard" parameterType="int">
+		update board set islive = 0
+		where board_num = #{board_num}
+	</delete> 
 	
 	
 	<select id="getBoard" resultType="org.jobcho.domain.BoardVO">

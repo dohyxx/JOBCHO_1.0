@@ -2,13 +2,14 @@
   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@include file="/WEB-INF/views/board/main.jsp"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@include file="/WEB-INF/views/main.jsp"%>
 
 
 
 <div class="row" style="margin-top: 80px">
   <div class="col-sm-7" style="margin-left: 450px">
-    <h2 class="page-header">게시판 이름</h2>
+    <h2 class="page-header"> ${board.board_name }</h2>
   </div>
   <!-- /.col-lg-12 -->
 </div>
@@ -18,7 +19,7 @@
   <div class="col-sm-7" style="margin-left: 450px">
     <div class="panel panel-default">
 
-      <div class="panel-heading">Board Read Page</div>
+      <div class="panel-heading"> ${board.board_info }</div>
       <!-- /.panel-heading -->
       <div class="panel-body">
 
@@ -40,7 +41,7 @@
 
         <div class="form-group">
           <label>작성자</label> <input class="form-control" name='writer'
-            value='<c:out value="${post.board_num }"/>' readonly="readonly">
+            value= "${post.writer} " readonly="readonly">
         </div>
 		
 <button data-oper='modify' class="btn btn-info">수정</button>
@@ -116,11 +117,11 @@
             <div class="modal-body">
               <div class="form-group">
                 <label>댓글 내용</label> 
-                <input class="form-control" name='reply_contents' value='reply'>
+                <input class="form-control" name='reply_contents' value=''>
               </div>      
               <div class="form-group">
                 <label>작성자</label> 
-                <input class="form-control" name='replyer' value='replyer'>
+                <input class="form-control" type="text"  name='reply_writer' value=<sec:authentication property="principal.users.user_name"/> readonly="readonly">
               </div>
               <div class="form-group">
                 <label>Reply Date</label> 
@@ -144,6 +145,8 @@
  				<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
   				<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
   				<input type='hidden' name='board_num' value='<c:out value="${post.board_num}"/>'>
+  				<input type='hidden' name='team_num' value='<c:out value="${team_num}"/>'>
+  				<input type='hidden' name='member_num' value='<c:out value="${member_num}"/>'>
   				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
   				<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'> 
 			</form>
@@ -159,7 +162,7 @@
   <!-- end panel -->
 </div>
 <!-- /.row -->
-<script type="text/javascript" src="/resources/js/reply.js?version=20211206"></script>
+<script type="text/javascript" src="/resources/board/reply.js?version=20211205"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -195,7 +198,7 @@ var replyUL =$(".chat");
 
 var replyModal = $("#replyModal");
 var modalInputReply = replyModal.find("input[name='reply_contents']");
-var modalInputReplyer = replyModal.find("input[name='replyer']");
+var modalInputReplyer = replyModal.find("input[name='reply_writer']");
 var modalInputReplyDate = replyModal.find("input[name='replyDate']");
 
 var replyModBtn = $("#replyModBtn"); //수정버튼
@@ -204,7 +207,7 @@ var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 
 
 //==========댓글 리스트 호출==========
-	getListReply(); 
+	getListReply();
 
 	function getListReply(){
 	
@@ -222,7 +225,7 @@ var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 	
 			for (var i = 0, len = list.length || 0; i < len; i++) {
 		           str +="<li class='left clearfix' data-reply_num='"+list[i].reply_num+"'>";
-		           str +="  <div><div class='header'><strong class='primary-font'>"+list[i].reply_contents+"</strong>"; 
+		           str +="  <div><div class='header'><strong class='primary-font'>"+list[i].reply_writer+"</strong>"; 
 		           str +="    <small class='pull-right text-muted'>"+replyService.replyTime(list[i].reply_date)+"</small></div>";
 		           str +="    <p>"+list[i].reply_contents+"</p></div></li>";
 		         }
@@ -233,7 +236,7 @@ var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 		
 	}//end getListReply
 
-
+ 
 
 
 //댓글 모달 닫기 버튼
@@ -247,13 +250,14 @@ $("#replyCloseBtn").on("click", function(e){
 $("#addReplyBtn").on("click", function(e){
 	
 	console.log("댓글 생성 모달창");
-	replyModal.find("input").val("");
+	
 	modalInputReplyDate.closest("div").hide();
 	replyModal.find("button[id !='replyCloseBtn']").hide();
 	
 	replyRegisterBtn.show();
 	
 	replyModal.modal("show");
+	getListReply();
 });
 
 
@@ -263,8 +267,9 @@ replyRegisterBtn.on("click", function(e){
 	console.log("댓글 등록");
 	var reply = {
 			reply_contents: modalInputReply.val(),
-			member_num: 1,
-			post_num: ${post.post_num}
+			member_num: ${member_num},
+			post_num: ${post.post_num},
+			reply_writer : modalInputReplyer.val()
 	};
 	
 	replyService.insertReply(reply, function(result){ //reply.js 호출
@@ -285,7 +290,7 @@ replyRegisterBtn.on("click", function(e){
 		replyService.getReply(reply_num, function(reply){ //reply.js 호출
 			
 			modalInputReply.val(reply.reply_contents);
-			modalInputReplyer.val(reply.member_num);
+			modalInputReplyer.val(reply.reply_writer);
 			modalInputReplyDate.val(replyService.replyTime(reply.reply_date)).attr("readonly", "readonly");
 			replyModal.data("reply_num", reply.reply_num);
 			
@@ -310,26 +315,32 @@ replyRegisterBtn.on("click", function(e){
 			alert("댓글이 수정되었습니다.");
 			replyModal.modal("hide");
 			getListReply(); //댓글 수정 후 댓글목록 갱신
+			console.log("댓글 수정~");
 		});
 	});
 
 	
 	//댓글 삭제 
    	replyRemoveBtn.on("click", function (e){
-   	  
+   		
+   		if(!confirm("정말로 삭제하시겠습니까?")){
+   			alert("취소되었습니다.")
+   			replyModal.modal("hide");
+   		}
+   		
    	  var reply_num = replyModal.data("reply_num");
    	  
-   	  replyService.deleteReply(reply_num, function(result){
-   	        
+   	  replyService.deleteReply(reply_num, function(result){//reply.js 호출
+   		  
    	    alert("댓글이 삭제되었습니다.");
    	   	replyModal.modal("hide");
-   		getListReply(); //댓글 삭제 후 댓글목록 갱신
+   	   	
+   	 	getListReply(); //댓글 삭제 후 댓글목록 갱신
+   	 	
+   	 	console.log("댓글 삭제~");
    	  });
-   	  
-   	});
-
-
-
+   	getListReply(); 
+ });
 
 
 });//end d.ready

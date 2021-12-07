@@ -11,10 +11,12 @@ public interface BoardService {
 	
 	public int insertBoard(BoardVO board);
 	
-	public List<BoardVO> getListBoard();
+	public List<BoardVO> getListBoard(int team_num);
 	
 	public int updateBoard(BoardVO board);
 	
 	public void deleteBoard(int board_num);
+	
+	public BoardVO getBoard(int board_num);
 
 }
