@@ -5,9 +5,20 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@include file="/WEB-INF/views/main.jsp"%>
 
+<head>
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+	
+	*{
+	font-family: 'Gowun Dodum', sans-serif;
+	}
+</style>
+
+</head>
 
 
-<div class="row" style="margin-top: 80px">
+
+<div class="row">
   <div class="col-sm-7" style="margin-left: 450px">
     <h2 class="page-header"> ${board.board_name }</h2>
   </div>
@@ -44,8 +55,12 @@
             value= "${post.writer} " readonly="readonly">
         </div>
 		
-<button data-oper='modify' class="btn btn-info">수정</button>
-<button data-oper='list' class="btn btn-default">목록</button>
+		<c:if test="${post.writer eq user_name }">
+			<button data-oper='modify' class="btn btn-info">수정</button>
+		</c:if>
+
+	<button data-oper='list' class="btn btn-default">목록</button>
+
 <br><br>
 <br><br>
 
@@ -124,7 +139,7 @@
                 <input class="form-control" type="text"  name='reply_writer' value=<sec:authentication property="principal.users.user_name"/> readonly="readonly">
               </div>
               <div class="form-group">
-                <label>Reply Date</label> 
+                <label>작성 시간</label> 
                 <input class="form-control" name='replyDate' value='2018-01-01 13:13'>
               </div>
             </div>
@@ -149,9 +164,10 @@
   				<input type='hidden' name='member_num' value='<c:out value="${member_num}"/>'>
   				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
   				<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'> 
+  				<input type='hidden' name='user_name' value='<sec:authentication property="principal.users.user_name"/>'>
 			</form>
 
-
+<input type='hidden' id='user_name' value='<sec:authentication property="principal.users.user_name"/>'>
 
       </div>
       <!--  end panel-body -->
@@ -191,7 +207,9 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	$("#calendar").remove();
+var user_name = $("#user_name").val(); //현재 로그인한 user_name
+
 //==========댓글 Modal==========
 var postUL = '<c:out value="${post.post_num }"/>';
 var replyUL =$(".chat");
@@ -206,8 +224,8 @@ var replyRemoveBtn = $("#replyRemoveBtn");//삭제버튼
 var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 
 
-//==========댓글 리스트 호출==========
-	getListReply();
+
+
 
 	function getListReply(){
 	
@@ -237,7 +255,8 @@ var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 	}//end getListReply
 
  
-
+	//==========댓글 리스트 호출==========
+	getListReply();
 
 //댓글 모달 닫기 버튼
 $("#replyCloseBtn").on("click", function(e){
@@ -253,6 +272,7 @@ $("#addReplyBtn").on("click", function(e){
 	
 	modalInputReplyDate.closest("div").hide();
 	replyModal.find("button[id !='replyCloseBtn']").hide();
+	replyModal.find("input[name !='reply_writer']").val(""); //입력항목 비우고 
 	
 	replyRegisterBtn.show();
 	
@@ -287,7 +307,12 @@ replyRegisterBtn.on("click", function(e){
 		
 		var reply_num = $(this).data("reply_num");
 		
-		replyService.getReply(reply_num, function(reply){ //reply.js 호출
+		console.log(user_name);
+		
+		//reply.js 호출
+		replyService.getReply(reply_num, function(reply){  //callback함수
+			
+			var reply_writer = reply.reply_writer; //유저,댓글 작성자 비교
 			
 			modalInputReply.val(reply.reply_contents);
 			modalInputReplyer.val(reply.reply_writer);
@@ -296,29 +321,20 @@ replyRegisterBtn.on("click", function(e){
 			
 			replyModal.find("button[id != 'replyCloseBtn']").hide();
 			
+			console.log("댓글 작성자 비교: " + reply_writer );
+			console.log("유저  비교: " + user_name );
+			
 			replyModBtn.show(); //수정버튼 활성화 
 			replyRemoveBtn.show();//삭제버튼 활성화
 			
+			//로그인한 유저와 댓글 작성자가 같으면 모달 보여주기
+			if(reply_writer == user_name){
 			replyModal.modal("show");
+			}
 		});
 	});
 	
 	
-	//특정 댓글 수정
-	replyModBtn.on("click", function(){
-		
-		var reply = {reply_num: replyModal.data("reply_num"), reply_contents: modalInputReply.val() };
-		console.log("댓글 수정내용: "+modalInputReply.val());
-		
-		replyService.updateReply(reply, function(result){//reply.js 호출
-		 	
-			alert("댓글이 수정되었습니다.");
-			replyModal.modal("hide");
-			getListReply(); //댓글 수정 후 댓글목록 갱신
-			console.log("댓글 수정~");
-		});
-	});
-
 	
 	//댓글 삭제 
    	replyRemoveBtn.on("click", function (e){
@@ -339,9 +355,33 @@ replyRegisterBtn.on("click", function(e){
    	 	
    	 	console.log("댓글 삭제~");
    	  });
-   	getListReply(); 
  });
+	
+	
+	
+	//특정 댓글 수정
+	replyModBtn.on("click", function(){
+		
+		var reply = {reply_num: replyModal.data("reply_num"), reply_contents: modalInputReply.val() };
+		console.log("댓글 수정내용: "+modalInputReply.val());
+		
+		replyService.updateReply(reply, function(result){//reply.js 호출
+			
+			if(!confirm("정말로 수정하시겠습니까?")){
+	   			alert("댓글이 수정되었습니다.")
+	   			replyModal.modal("hide");
+	   		}
+		 	
+			alert("댓글이 수정되었습니다.");
+			replyModal.modal("hide");
+			
+			getListReply(); //댓글 수정 후 댓글목록 갱신
+			console.log("댓글 수정~");
+		});
+	});
 
+	
+	
 
 });//end d.ready
 

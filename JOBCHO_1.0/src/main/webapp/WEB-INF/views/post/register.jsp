@@ -5,8 +5,19 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@include file="/WEB-INF/views/main.jsp"%>
 
+<head>
 
-<div class="row" style="margin-top: 100px">
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+	
+	*{
+	font-family: 'Gowun Dodum', sans-serif;
+	}
+	</style>
+</head>
+
+
+<div class="row">
   <div class="col-sm-7" style="margin-left: 450px">
     <h2 class="page-header">${board.board_name }</h2>
   </div>
@@ -134,7 +145,7 @@
 
 $(document).ready(function(){
 
-	
+	$("#calendar").remove();
 	var formObj = $("form");
 	
 	//취소 버튼 클릭 시 board_num만 가지고 리스트로

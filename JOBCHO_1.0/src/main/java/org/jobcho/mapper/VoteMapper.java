@@ -9,5 +9,6 @@ public interface VoteMapper {
 	int insertVote(VoteVO vote);
 	List<VoteVO> listVote(int team_num);
 	int endVote(int team_num);
-	
+	VoteVO getVote(int vote_num);
+	List<VoteVO> listEndVote(int team_num);
 }

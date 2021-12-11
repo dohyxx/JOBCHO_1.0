@@ -5,8 +5,18 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@include file="/WEB-INF/views/main.jsp"%>
 
+<head>
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+	
+	*{
+	font-family: 'Gowun Dodum', sans-serif;
+	}
+</style>
 
-<div class="row" style="margin-top: 80px">
+</head>
+
+<div class="row">
 	<div class="col-sm-7" style="margin-left: 450px">
 		<h2 class="page-header">${board.board_name }</h2>
 	</div>
@@ -80,7 +90,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
+	$("#calendar").remove();
 	var formObj = $("form");
 	
 	$('button').on("click", function(e){
@@ -123,6 +133,12 @@ $(document).ready(function() {
 		}
 	
 		else if(operation === 'modify'){
+			
+			if(!confirm("정말로 수정하시겠습니까?")){
+	   			alert("수정되었습니다.")
+	   			replyModal.modal("hide");
+	   		}
+			
 			alert("게시글이 수정되었습니다.");
 		}
 		formObj.submit();

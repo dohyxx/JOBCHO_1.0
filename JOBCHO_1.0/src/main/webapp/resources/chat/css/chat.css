@@ -9,8 +9,8 @@
 
 .job-chat p {
   max-width: 500px;
-  width:300;
-  min-width: 255px;
+  width:200px;
+  min-width: 200px;
   
   margin-bottom: 12px;
   line-height: 24px;
@@ -31,7 +31,7 @@
 }
 
 .job-chat .send{
-	margin-left: 70%;
+	margin-left: 46%;
 }
 
 .send {
@@ -50,3 +50,39 @@
 	
 }
 
+.send-thumnail-profile{
+    background-size: cover;
+    width: 2rem;
+    height: 2rem;
+    float: left;
+    border-radius: 100em;
+    margin-left: 40%;
+}
+
+.receive-thumnail-profile{
+    background-size: cover;
+    width: 2rem;
+    height: 2rem;
+    float: left;
+    border-radius: 100em;
+    margin-right:0px ;
+}
+
+.send-nameDate{
+	margin-left: 40%;;
+	padding: 0px;
+	width:200px;
+	
+}
+
+.receive-nameDate{
+	margin:0px;
+	padding: 0px;
+	width:150px;
+	
+}
+
+.job-team-body2{
+	position:fixed;
+	z-index:101;
+}

@@ -1,5 +1,5 @@
 
-/*검색창*/
+/*寃��깋李�*/
 .search-navbar-right{
     position: fixed;
     top: 50px;
@@ -11,7 +11,7 @@
     
     padding-bottom: 50px;
     transition: .5s;
-    z-index: 1;
+    z-index: 99;
   }
 
   .nav-search{
@@ -117,8 +117,41 @@
   overflow-y: auto;
 }
 
-/*할일창*/
+/*�븷�씪�깮�꽦*/
 #createToDo{
+  width: 95%;
+  border-radius: 5px;
+  background-color: #0c5df4;
+  text-align: center;
+  margin: 10px;
+  font-size: 16px;
+  padding: 8px;
+}
+
+/*�셿猷뚮맂�븷�씪�깮�꽦踰꾪듉*/
+#selectTodoDeleteList{
+  width: 95%;
+  border-radius: 5px;
+  background-color: #0c5df4;
+  text-align: center;
+  margin: 10px;
+  font-size: 16px;
+  padding: 8px;
+}
+
+
+/*�셿猷뚮맂 �닾�몴李�*/
+#end-vote-list{
+  width: 95%;
+  border-radius: 5px;
+  background-color: #0c5df4;
+  text-align: center;
+  margin: 10px;
+  font-size: 16px;
+  padding: 8px;
+}
+
+#createVote{
   width: 95%;
   border-radius: 5px;
   background-color: #0c5df4;

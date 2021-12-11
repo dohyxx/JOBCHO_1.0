@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="/resources/login/css/find.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<meta name="_csrf" content="${_csrf.token}"/>
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+	
+	*{
+	font-family: 'Gowun Dodum', sans-serif;
+	}
+</style>
 	<script type="text/javascript">
 	
 	//security ajax를 사용하면 403에러가 발생하기 때문에 아래와 같은 코드를 작성해야됨 
@@ -33,8 +40,7 @@
 			success : function(data){
 				console.log(data);
 				
-				if(data==1){
-					console.log("성공");					
+				if(data==1){			
 					alert("성공")
 					window.location.href = "/users/findPw_3";
 				}else if(data == 0){
