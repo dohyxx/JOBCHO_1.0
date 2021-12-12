@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset='utf-8'>
-<title>Page Title</title>
+<title>JOBCHO 1.0</title>
 <!-- fullcalendar CDN -->
 <link
 	href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css"
@@ -99,7 +99,7 @@
 
 				<!--프로필-->
 				<div>
-					<div class="nav-profile-image-left"
+					<div class="nav-profile-image-left" style="background-image: url('/resources/board/apple.png')"
 						></div>
 					<div class="nav-profile-content-left">
 						<p>${team.team_name }</p>
@@ -1246,7 +1246,6 @@ $(document).ready(function(){
 				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>"; //게시판이름 출력
 				str +="</a>"; 
 				
-				
 			}
 			boardUL.html(str); //html 추가
 		});
@@ -1258,7 +1257,6 @@ $(document).ready(function(){
     var boardModal = $("#boardModal");
     var modalInputBoardName = boardModal.find("input[name='board_name']");
     var modalInputBoardInfo = boardModal.find("input[name='board_info']");
-    /* var modalInputReplyDate = boardModal.find("input[name='member_name']"); */
     
     var modalRegisterBtn = $("#modalRegisterBtn");
     var modalModBtn = $("#modalModBtn");
