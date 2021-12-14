@@ -28,22 +28,21 @@ var listBoard = (function() {
 	//게시판 생성
 	function insertBoard(board, param, callback, error) {
 		var team_num = param.team_num;
-		console.log("게시판 생성zzzzz: "+team_num );
+		console.log("게시판 생성: "+team_num );
 		
-		if(!board.board_name){
+		if(!board.board_name){ //게시판 이름 작성 안했을 시
 			alert("게시판 이름을 작성해주세요.");
 			return false;
 		}
-		if(!board.board_info){
+		if(!board.board_info){//게시판 정보 작성 안했을 시
 			alert("게시판 정보를 작성해주세요.");
 			return false;
 		}
 		
-		
 		$.ajax({
 			type : 'post',
-			url : "/team/"+ team_num +"/board/new",
-			data : JSON.stringify(board),
+			url : "/team/"+ team_num +"/board/new", //team번호 전달
+			data : JSON.stringify(board), //board객체 전달
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if(callback){

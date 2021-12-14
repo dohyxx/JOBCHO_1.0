@@ -59,15 +59,16 @@ public class BoardController {
 	public ResponseEntity<BoardVO> insertBoard(@RequestBody BoardVO board,
 																				@PathVariable("team_num") int team_num){
 		
-		System.out.println("컨트롤러 insertBoard");
 		board.setTeam_num(team_num);
-		int insertCount = service.insertBoard(board);
+		int insertCount = service.insertBoard(board);//DB저장
 		log.info("게시판 생성: " + board);
 		
 		return insertCount == 1
 				? new ResponseEntity<>(HttpStatus.OK)
 				:  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	
 	
 	
 	/*

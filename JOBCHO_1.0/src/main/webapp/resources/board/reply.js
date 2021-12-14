@@ -67,7 +67,7 @@ var replyService = (function() {
 		
 		$.ajax({
 			type : 'put',
-			url : '/reply/' + reply.reply_num,
+			url : '/reply/' + reply.reply_num, //controller 호출
 			data : JSON.stringify(reply),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr){

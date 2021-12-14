@@ -255,7 +255,7 @@ var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 	}//end getListReply
 
  
-	//==========댓글 리스트 호출==========
+//==========댓글 리스트 호출==========
 	getListReply();
 
 //댓글 모달 닫기 버튼

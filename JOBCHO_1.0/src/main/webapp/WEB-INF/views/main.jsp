@@ -858,7 +858,7 @@
 	<!--삭제된 오늘의 할일 모달 끝 -->
 	
 		
-		<!-- 게시판 board_num 계속 유지시키기 -->
+		<!-- team,member, board, page 정보 유지 -->
     	<form id='actionForm' action="/post/list" method='get'>
 				<input type='hidden' name='board_num' value='${pageMaker.cri.pageNum}'>
 				<input type='hidden' name='team_num' value='${param.team_num}'>
@@ -1230,24 +1230,24 @@ $(document).ready(function(){
 	console.log("유저넘 : " + user_num)
 	
 	
-	//========게시판 목록 호출=======
+	//게시판 목록 호출
 	showList(); 
 	
 	function showList(){
 		
-		listBoard.getListBoard({team_num:team_num}, function(board){ //board.js 메서드 호출
+		listBoard.getListBoard({team_num:team_num}, function(board){ //board.js 호출
 			
 			console.log("게시판 목록 callback: " +team_num );
 			var str ="";
 			
 			for(var i = 0; i < board.length; i++){
-                str +="<a href='"+board[i].board_num+"' class='nav__link-left'>"; //board_num 전달
+                str +="<a href='"+board[i].board_num+"' class='nav__link-left'>"; //board_num 유지,전달
                 str +="<ion-icon name='home-outline' class='nav__icon-left'></ion-icon>";
 				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>"; //게시판이름 출력
 				str +="</a>"; 
 				
 			}
-			boardUL.html(str); //html 추가
+			boardUL.html(str); 
 		});
 	}
 
@@ -1285,9 +1285,10 @@ $(document).ready(function(){
 		}); // end createBoard 
 	
 	 
-		//=========게시판 생성============
+		//게시판 생성
 		modalRegisterBtn.on("click", function(e){
 			
+			//모달에 입력받은 값 저장
 			var board = {
 					board_name: modalInputBoardName.val(),
 					board_info: modalInputBoardInfo.val(),
@@ -1295,16 +1296,16 @@ $(document).ready(function(){
 			};
 			console.log("게시판 생성!: "+team_num );
 			
-			listBoard.insertBoard(board,{team_num:team_num},  function(result){
+			listBoard.insertBoard(board,{team_num:team_num},  function(result){ //board.js 호출
 				alert("게시판이 생성되었습니다.");
 	
 				boardModal.modal("hide");
 				
-				showList();
+				showList(); //생성 후 다시 목록 갱신
 			});
 		});
 	
-		//======게시판 이름 클릭시 게시글로 이동======
+		//게시판 이름 클릭시 게시글로 이동
 		var actionForm = $("#actionForm");
 		
 		$("#board").on("click", "a", function(e){
@@ -1312,7 +1313,7 @@ $(document).ready(function(){
 			console.log("게시글로 이동")
 			e.preventDefault();
 			
-			actionForm.find("input[name='board_num']").val($(this).attr("href"));
+			actionForm.find("input[name='board_num']").val($(this).attr("href"));//클릭한 게시판 번호저장
 			actionForm.submit();
 		});
 		

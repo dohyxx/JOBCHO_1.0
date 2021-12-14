@@ -128,8 +128,6 @@ $(document).ready(function() {
 			formObj.append("<input type='hidden' name='team_num' value='"+${team_num}+"'>");
 			formObj.append("<input type='hidden' name='member_num' value='"+${member_num}+"'>");
 
-			/* formObj.append("<input type='hidden' name='type' value='"+${cri.type}+"'>");
-			formObj.append("<input type='hidden' name='keyword' value='"+${cri.keyword}+"'>"); */
 		}
 	
 		else if(operation === 'modify'){
@@ -146,6 +144,8 @@ $(document).ready(function() {
 	});
 });
 
+/* formObj.append("<input type='hidden' name='type' value='"+${cri.type}+"'>");
+formObj.append("<input type='hidden' name='keyword' value='"+${cri.keyword}+"'>"); */
 </script>
 
 

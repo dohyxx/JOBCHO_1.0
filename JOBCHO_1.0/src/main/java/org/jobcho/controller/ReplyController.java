@@ -76,7 +76,6 @@ public class ReplyController {
 	public ResponseEntity<ReplyVO> updateReply(@PathVariable("reply_num") int reply_num,
 																				@RequestBody ReplyVO reply){
 		log.info("댓글 수정: " + reply_num);
-		System.out.println("댓글 수정 내용: " +reply.getReply_contents());
 		
 		reply.setReply_num(reply_num);
 		int updateCount = service.updateReply(reply);

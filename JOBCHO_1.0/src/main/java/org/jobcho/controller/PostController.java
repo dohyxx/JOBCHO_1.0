@@ -47,15 +47,13 @@ public class PostController {
 											@RequestParam("team_num") int team_num, 
 											@RequestParam("member_num") int member_num){	
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> map = new HashMap<String, Object>();//다중 파라미터 적용
 		map.put("board_num", board_num);
 		map.put("cri", cri);
 	
 		int total = service.getTotalCount(map);//게시글 수 구하기
 		BoardVO board = boardService.getBoard(board_num);//게시판 이름,정보 가져오기
 		
-		log.info("게시글 리스트");
-		log.info("전체 글 수: " + total);
 		log.info("검색조건: " + cri.getType());
 		log.info("검색내용: " + cri.getKeyword());
 		
@@ -130,8 +128,8 @@ public class PostController {
 			rttr.addFlashAttribute("result", " success");
 		}
 		
+		//해당하는 게시판의 정보를 가져온다.board_name전달
 		BoardVO board =  boardService.getBoard(post.getBoard_num());
-		System.out.println("게시글 수정 보드넘: " + board);
 		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
