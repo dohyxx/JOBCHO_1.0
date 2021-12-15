@@ -6,7 +6,7 @@
 <head>
 <meta charset='utf-8'>
 
-<title>Page Title</title>
+<title>JOBCHO 2.0</title>
 
 
 <!-- 합쳐지고 최소화된 최신 CSS -->

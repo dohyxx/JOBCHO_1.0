@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset='utf-8'>
-<title>JOBCHO 1.0</title>
+<title>JOBCHO 2.0</title>
 <!-- fullcalendar CDN -->
 <link
 	href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css"
